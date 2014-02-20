@@ -94,8 +94,8 @@ namespace UntitledSandbox
 				// Draw the model. A model can have multiple meshes, so loop.
 				foreach (ModelMesh mesh in gameObj.model.Meshes)
 				{
-					Matrix[] transforms = new Matrix[cube.Bones.Count];
-					cube.CopyAbsoluteBoneTransformsTo(transforms);
+					Matrix[] transforms = new Matrix[gameObj.model.Bones.Count];
+					gameObj.model.CopyAbsoluteBoneTransformsTo(transforms);
 
 					// This is where the mesh orientation is set, as well 
 					// as our camera and projection.
