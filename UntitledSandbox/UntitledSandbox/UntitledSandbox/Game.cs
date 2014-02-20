@@ -20,6 +20,8 @@ namespace UntitledSandbox
 		SpriteBatch spriteBatch;
 		float aspectRatio;
 
+		double lastUpdate = 0;
+
 		List<CModel> objectList = new List<CModel>();
 
 		Player.Player player;
@@ -43,14 +45,14 @@ namespace UntitledSandbox
 			aspectRatio = graphics.GraphicsDevice.Viewport.AspectRatio;
 
 			// [ContentLogic] Load 3D Content
-			Model cube = Content.Load<Model>("cube");
+			Model cubeModel = Content.Load<Model>("cube");
 			
-			// [WorldLogic] Create a 100x100 map of cubes
-			for (int x = 0; x < 200; x += 2)
+			// [WorldLogic] Create a 5x5 map of cubes
+			for (int x = 0; x < (5 * 2); x += 2)
 			{
-				for (int y = 0; y < 200; y += 2)
+				for (int z = 0; z < (5 * 2); z += 2)
 				{
-					objectList.Add(new CModel(cube, new Vector3(x, 0, y)));
+					objectList.Add(new CModel(cubeModel, new Vector3(x, 0, z)));
 				}
 			}
 
@@ -64,7 +66,7 @@ namespace UntitledSandbox
 
 		protected override void UnloadContent()
 		{
-			// Could save here in the future
+			// [[ExitLogic] Could save here in the future
 		}
 
 		protected override void Update(GameTime gameTime)
@@ -74,8 +76,15 @@ namespace UntitledSandbox
 			if (Keyboard.GetState().IsKeyDown(Keys.Space)) this.Exit();
 
 			// [GameLogic] Player Controls
-			float timeDifference = (float)gameTime.ElapsedGameTime.TotalMilliseconds / 1000.0f;
-			player.controls.ProcessInput(timeDifference);
+			Console.WriteLine((string)gameTime.ElapsedGameTime.TotalMilliseconds.ToString());
+
+			//lastUpdate += gameTime.ElapsedGameTime.TotalMilliseconds;
+			//if (lastUpdate >= 10)
+			//{
+				float timeDifference = (float)lastUpdate / 1000.0f;
+				player.controls.ProcessInput(timeDifference);
+				//lastUpdate = 0;
+			//}
 
 			// [GameLogic]
 			base.Update(gameTime);
@@ -83,11 +92,7 @@ namespace UntitledSandbox
 
 		protected override void Draw(GameTime gameTime)
 		{
-			GraphicsDevice.Clear(Color.CornflowerBlue);
-
-			// TODO: Add your drawing code here
-			// Copy any parent transforms.
-			
+			GraphicsDevice.Clear(Color.Transparent);
 
 			foreach (CModel gameObj in objectList)
 			{
@@ -113,7 +118,6 @@ namespace UntitledSandbox
 					mesh.Draw();
 				}
 			}
-
 			base.Draw(gameTime);
 		}
 	}
