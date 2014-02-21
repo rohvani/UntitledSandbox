@@ -1,34 +1,36 @@
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Audio;
-using Microsoft.Xna.Framework.Content;
-using Microsoft.Xna.Framework.GamerServices;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
-using Microsoft.Xna.Framework.Media;
 
 using UntitledSandbox.Common;
-using UntitledSandbox.Player;
+using UntitledSandbox.PlayerData;
 
 namespace UntitledSandbox
 {
 	public class Game : Microsoft.Xna.Framework.Game
 	{
-		public static GraphicsDeviceManager graphics;
-		SpriteBatch spriteBatch;
-		float aspectRatio;
+		private static Game _instance;
 
-		double lastUpdate = 0;
+		public static Game Instance
+		{
+			get { return _instance; }
+		}
 
-		List<CModel> objectList = new List<CModel>();
+		public GraphicsDeviceManager graphics;
 
-		Player.Player player;
+		private SpriteBatch spriteBatch;
+		private float aspectRatio;
+		private double lastUpdate = 0;
+		private List<CModel> objectList = new List<CModel>();
+		private Player player;
 
 		public Game()
 		{
-			graphics = new GraphicsDeviceManager(this);
+			_instance = this;
+
+			this.graphics = new GraphicsDeviceManager(this);
 			Content.RootDirectory = "Content";
 		}
 
@@ -40,9 +42,9 @@ namespace UntitledSandbox
 		protected override void LoadContent()
 		{
 			// [ContentLogic] Graphic Devices & Settings
-			spriteBatch = new SpriteBatch(GraphicsDevice);
+			this.spriteBatch = new SpriteBatch(GraphicsDevice);
 			GraphicsDevice.RasterizerState = RasterizerState.CullCounterClockwise;
-			aspectRatio = graphics.GraphicsDevice.Viewport.AspectRatio;
+			this.aspectRatio = this.graphics.GraphicsDevice.Viewport.AspectRatio;
 
 			// [ContentLogic] Load 3D Content
 			Model cubeModel = Content.Load<Model>("cube");
@@ -58,10 +60,11 @@ namespace UntitledSandbox
 
 			// [StartupLogic] Create Player & Update
 			Mouse.SetPosition(GraphicsDevice.Viewport.Width / 2, GraphicsDevice.Viewport.Height / 2);
-			player = new Player.Player();
-			
-			player.camera.UpdateViewMatrix();
-			player.camera.projectionMatrix = Matrix.CreatePerspectiveFieldOfView(MathHelper.PiOver4, GraphicsDevice.Viewport.AspectRatio, 0.3f, 1000.0f);
+			this.player = new Player();
+
+			this.player.Camera.UpdateViewMatrix();
+			this.player.Camera.ProjectionMatrix 
+				= Matrix.CreatePerspectiveFieldOfView(MathHelper.PiOver4, GraphicsDevice.Viewport.AspectRatio, 0.3f, 1000.0f);
 		}
 
 		protected override void UnloadContent()
@@ -78,12 +81,12 @@ namespace UntitledSandbox
 			// [GameLogic] Player Controls
 			Console.WriteLine((string)gameTime.ElapsedGameTime.TotalMilliseconds.ToString());
 
-			//lastUpdate += gameTime.ElapsedGameTime.TotalMilliseconds;
-			//if (lastUpdate >= 10)
+			//this.lastUpdate += gameTime.ElapsedGameTime.TotalMilliseconds;
+			//if (this.lastUpdate >= 10)
 			//{
-				float timeDifference = (float)lastUpdate / 1000.0f;
-				player.controls.ProcessInput(timeDifference);
-				//lastUpdate = 0;
+			float timeDifference = (float) this.lastUpdate / 1000.0f;
+				this.player.Controls.ProcessInput(timeDifference);
+				//this.lastUpdate = 0;
 			//}
 
 			// [GameLogic]
@@ -94,13 +97,13 @@ namespace UntitledSandbox
 		{
 			GraphicsDevice.Clear(Color.Transparent);
 
-			foreach (CModel gameObj in objectList)
+			foreach (CModel gameObj in this.objectList)
 			{
 				// Draw the model. A model can have multiple meshes, so loop.
-				foreach (ModelMesh mesh in gameObj.model.Meshes)
+				foreach (ModelMesh mesh in gameObj.Model.Meshes)
 				{
-					Matrix[] transforms = new Matrix[gameObj.model.Bones.Count];
-					gameObj.model.CopyAbsoluteBoneTransformsTo(transforms);
+					Matrix[] transforms = new Matrix[gameObj.Model.Bones.Count];
+					gameObj.Model.CopyAbsoluteBoneTransformsTo(transforms);
 
 					// This is where the mesh orientation is set, as well 
 					// as our camera and projection.
@@ -108,11 +111,14 @@ namespace UntitledSandbox
 					{
 						//effect.EnableDefaultLighting();
 
-						effect.World = transforms[mesh.ParentBone.Index] * Matrix.CreateRotationY(gameObj.rotation) * Matrix.CreateTranslation(gameObj.position);
+						effect.World = transforms[mesh.ParentBone.Index] 
+							* Matrix.CreateRotationY(gameObj.Rotation) 
+							* Matrix.CreateTranslation(gameObj.Position);
 
-						effect.View = player.camera.viewMatrix;
+						effect.View = this.player.Camera.ViewMatrix;
 
-						effect.Projection = Matrix.CreatePerspectiveFieldOfView(MathHelper.ToRadians(45.0f), aspectRatio, 1.0f, 10000.0f);
+						effect.Projection 
+							= Matrix.CreatePerspectiveFieldOfView(MathHelper.ToRadians(45.0f), this.aspectRatio, 1.0f, 10000.0f);
 					}
 					// Draw the mesh, using the effects set above.
 					mesh.Draw();

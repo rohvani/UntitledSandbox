@@ -108,9 +108,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Common\CModel.cs" />
-    <Compile Include="Player\Camera.cs" />
-    <Compile Include="Player\Controls.cs" />
-    <Compile Include="Player\Player.cs" />
+    <Compile Include="PlayerData\Camera.cs" />
+    <Compile Include="PlayerData\Controls.cs" />
+    <Compile Include="PlayerData\Player.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Game.cs" />
