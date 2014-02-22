@@ -26,9 +26,9 @@ namespace UntitledSandbox.PlayerData
 			{
 				float xDifference = mouseState.X - this.Player.MouseState.X;
 				float yDifference = mouseState.Y - this.Player.MouseState.Y;
-				this.Player.Camera._rotationYaw -= this.Player.Camera._rotationSpeed * xDifference * amount;
-				this.Player.Camera._rotationPitch -= this.Player.Camera._rotationSpeed * yDifference * amount;
-				Mouse.SetPosition(Game.graphics.GraphicsDevice.Viewport.Width / 2, Game.graphics.GraphicsDevice.Viewport.Height / 2);
+				this.Player.Camera.RotationYaw -= this.Player.Camera.RotationSpeed * xDifference * amount;
+				this.Player.Camera.RotationPitch -= this.Player.Camera.RotationSpeed * yDifference * amount;
+				Mouse.SetPosition(Game.Instance.graphics.GraphicsDevice.Viewport.Width / 2, Game.Instance.graphics.GraphicsDevice.Viewport.Height / 2);
 				this.Player.Camera.UpdateViewMatrix();
 			}
 

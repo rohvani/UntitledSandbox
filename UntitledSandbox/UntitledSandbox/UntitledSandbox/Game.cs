@@ -79,15 +79,13 @@ namespace UntitledSandbox
 			if (Keyboard.GetState().IsKeyDown(Keys.Space)) this.Exit();
 
 			// [GameLogic] Player Controls
-			Console.WriteLine((string)gameTime.ElapsedGameTime.TotalMilliseconds.ToString());
-
-			//this.lastUpdate += gameTime.ElapsedGameTime.TotalMilliseconds;
-			//if (this.lastUpdate >= 10)
-			//{
-			float timeDifference = (float) this.lastUpdate / 1000.0f;
+			this.lastUpdate += gameTime.ElapsedGameTime.TotalMilliseconds;
+			if (this.lastUpdate >= 10)
+			{
+				float timeDifference = (float) this.lastUpdate / 1000.0f;
 				this.player.Controls.ProcessInput(timeDifference);
-				//this.lastUpdate = 0;
-			//}
+				this.lastUpdate = 0;
+			}
 
 			// [GameLogic]
 			base.Update(gameTime);
@@ -109,7 +107,7 @@ namespace UntitledSandbox
 					// as our camera and projection.
 					foreach (BasicEffect effect in mesh.Effects)
 					{
-						//effect.EnableDefaultLighting();
+						effect.EnableDefaultLighting();
 
 						effect.World = transforms[mesh.ParentBone.Index] 
 							* Matrix.CreateRotationY(gameObj.Rotation) 
