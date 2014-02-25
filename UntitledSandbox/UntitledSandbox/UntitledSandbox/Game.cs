@@ -88,6 +88,7 @@ namespace UntitledSandbox
 		{
 			GraphicsDevice.Clear(Color.Transparent);
 
+			Matrix world;
 			BoundingSphere sphere;
 
 			foreach (CModel gameObj in this.objectList)
@@ -95,9 +96,11 @@ namespace UntitledSandbox
 				// Draw the model. A model can have multiple meshes, so loop.
 				foreach (ModelMesh mesh in gameObj.Model.Meshes)
 				{
-					Matrix world = gameObj.Transforms[mesh.ParentBone.Index]
+					world = gameObj.Transforms[mesh.ParentBone.Index]
 							* Matrix.CreateRotationY(gameObj.Rotation)
 							* Matrix.CreateTranslation(gameObj.Position);
+
+					sphere = gameObj.Model.Meshes[0].BoundingSphere.Transform(world);
 					
 					// This is where the mesh orientation is set, as well 
 					// as our camera and projection.
@@ -111,7 +114,7 @@ namespace UntitledSandbox
 
 						effect.Projection = this.player.Camera.ProjectionMatrix;
 					}
-					gameObj.Model.Meshes[0].BoundingSphere.Transform(ref world, out sphere);
+
 					if (this.player.Camera.Frustum.Contains(sphere) != ContainmentType.Disjoint) 
 						mesh.Draw();
 				}
