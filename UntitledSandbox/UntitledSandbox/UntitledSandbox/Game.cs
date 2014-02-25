@@ -42,7 +42,7 @@ namespace UntitledSandbox
 		{
 			// [ContentLogic] Graphic Devices & Settings
 			this.spriteBatch = new SpriteBatch(GraphicsDevice);
-			GraphicsDevice.RasterizerState = RasterizerState.CullCounterClockwise;
+			//GraphicsDevice.RasterizerState = RasterizerState.CullCounterClockwise;
 			this.aspectRatio = this.graphics.GraphicsDevice.Viewport.AspectRatio;
 
 			// [ContentLogic] Load 3D Content
@@ -93,7 +93,6 @@ namespace UntitledSandbox
 
 			foreach (CModel gameObj in this.objectList)
 			{
-				// Draw the model. A model can have multiple meshes, so loop.
 				foreach (ModelMesh mesh in gameObj.Model.Meshes)
 				{
 					world = gameObj.Transforms[mesh.ParentBone.Index]
@@ -102,8 +101,6 @@ namespace UntitledSandbox
 
 					sphere = gameObj.Model.Meshes[0].BoundingSphere.Transform(world);
 					
-					// This is where the mesh orientation is set, as well 
-					// as our camera and projection.
 					foreach (BasicEffect effect in mesh.Effects)
 					{
 						effect.EnableDefaultLighting();
