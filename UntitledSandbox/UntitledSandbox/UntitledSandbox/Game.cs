@@ -22,7 +22,6 @@ namespace UntitledSandbox
 
 		private SpriteBatch spriteBatch;
 		private float aspectRatio;
-		private double lastUpdate = 0;
 		private List<CModel> objectList = new List<CModel>();
 		public Player player;
 
@@ -62,9 +61,9 @@ namespace UntitledSandbox
 			Mouse.SetPosition(GraphicsDevice.Viewport.Width / 2, GraphicsDevice.Viewport.Height / 2);
 			this.player = new Player();
 
-			this.player.Camera.UpdateViewMatrix();
+			this.player.Camera.ViewMatrix = Matrix.CreateLookAt(new Vector3(0, 0, -100), Vector3.Zero, Vector3.Up);
 			this.player.Camera.ProjectionMatrix 
-				= Matrix.CreatePerspectiveFieldOfView(MathHelper.PiOver4, GraphicsDevice.Viewport.AspectRatio, 0.3f, 1000.0f);
+				= Matrix.CreatePerspectiveFieldOfView(MathHelper.PiOver4, this.aspectRatio, 0.3f, 1000.0f);
 		}
 
 		protected override void UnloadContent()
@@ -79,14 +78,8 @@ namespace UntitledSandbox
 			if (Keyboard.GetState().IsKeyDown(Keys.Space)) this.Exit();
 
 			// [GameLogic] Player Controls
-			this.lastUpdate += gameTime.ElapsedGameTime.TotalMilliseconds;
-			if (this.lastUpdate >= 10)
-			{
-				float timeDifference = (float) this.lastUpdate / 1000.0f;
-				this.player.Controls.ProcessInput(timeDifference);
-				this.lastUpdate = 0;
-			}
-
+			this.player.Controls.ProcessInput((float) gameTime.ElapsedGameTime.TotalMilliseconds / 1000.0f);
+			
 			// [GameLogic]
 			base.Update(gameTime);
 		}
@@ -95,35 +88,32 @@ namespace UntitledSandbox
 		{
 			GraphicsDevice.Clear(Color.Transparent);
 
+			BoundingSphere sphere;
+
 			foreach (CModel gameObj in this.objectList)
 			{
-				ContainmentType currentContainmentType = player.Camera.Frustum.Contains(gameObj.Model.Meshes[0].BoundingSphere);
-				if (currentContainmentType != ContainmentType.Disjoint)
+				// Draw the model. A model can have multiple meshes, so loop.
+				foreach (ModelMesh mesh in gameObj.Model.Meshes)
 				{
-					// Draw the model. A model can have multiple meshes, so loop.
-					foreach (ModelMesh mesh in gameObj.Model.Meshes)
+					Matrix world = gameObj.Transforms[mesh.ParentBone.Index]
+							* Matrix.CreateRotationY(gameObj.Rotation)
+							* Matrix.CreateTranslation(gameObj.Position);
+					
+					// This is where the mesh orientation is set, as well 
+					// as our camera and projection.
+					foreach (BasicEffect effect in mesh.Effects)
 					{
-						Matrix[] transforms = new Matrix[gameObj.Model.Bones.Count];
-						gameObj.Model.CopyAbsoluteBoneTransformsTo(transforms);
+						effect.EnableDefaultLighting();
+						
+						effect.World = world;
 
-						// This is where the mesh orientation is set, as well 
-						// as our camera and projection.
-						foreach (BasicEffect effect in mesh.Effects)
-						{
-							effect.EnableDefaultLighting();
+						effect.View = this.player.Camera.ViewMatrix;
 
-							effect.World = transforms[mesh.ParentBone.Index]
-								* Matrix.CreateRotationY(gameObj.Rotation)
-								* Matrix.CreateTranslation(gameObj.Position);
-
-							effect.View = this.player.Camera.ViewMatrix;
-
-							effect.Projection
-								= Matrix.CreatePerspectiveFieldOfView(MathHelper.ToRadians(45.0f), this.aspectRatio, 1.0f, 10000.0f);
-						}
-						// Draw the mesh, using the effects set above.
-						mesh.Draw();
+						effect.Projection = this.player.Camera.ProjectionMatrix;
 					}
+					gameObj.Model.Meshes[0].BoundingSphere.Transform(ref world, out sphere);
+					if (this.player.Camera.Frustum.Contains(sphere) != ContainmentType.Disjoint) 
+						mesh.Draw();
 				}
 			}
 			base.Draw(gameTime);

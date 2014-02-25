@@ -7,11 +7,11 @@
       <Importer>FbxImporter</Importer>
       <Processor>ModelProcessor</Processor>
       <Options>None</Options>
-      <Output>C:\Users\Frank\Documents\GitHub\UntitledSandbox\UntitledSandbox\UntitledSandbox\UntitledSandbox\bin\x86\Debug\Content\cube.xnb</Output>
-      <Time>2014-02-25T10:18:26.3148993-05:00</Time>
+      <Output>C:\Users\Shaun\Documents\GitHub\UntitledSandbox\UntitledSandbox\UntitledSandbox\UntitledSandbox\bin\x86\Debug\Content\cube.xnb</Output>
+      <Time>2014-02-25T10:34:55.8955896-05:00</Time>
       <Dependency>
         <Key>obj\x86\Debug\cube_0.xml</Key>
-        <Value>2014-02-25T10:24:54.4240979-05:00</Value>
+        <Value>2014-02-25T10:48:12.925177-05:00</Value>
       </Dependency>
     </Item>
     <Item>
@@ -19,7 +19,7 @@
       <Importer>FbxImporter</Importer>
       <Options>IntermediateFile, DontCacheImportedData</Options>
       <Output>obj\x86\Debug\cube_0.xml</Output>
-      <Time>2014-02-25T10:18:26.3148993-05:00</Time>
+      <Time>2014-02-25T10:34:55.8955896-05:00</Time>
     </Item>
     <BuildSuccessful>true</BuildSuccessful>
     <Settings>
@@ -27,10 +27,10 @@
       <TargetProfile>HiDef</TargetProfile>
       <BuildConfiguration>Debug</BuildConfiguration>
       <CompressContent>false</CompressContent>
-      <RootDirectory>C:\Users\Frank\Documents\GitHub\UntitledSandbox\UntitledSandbox\UntitledSandbox\UntitledSandboxContent\</RootDirectory>
-      <LoggerRootDirectory>C:\Users\Frank\Documents\GitHub\UntitledSandbox\UntitledSandbox\UntitledSandbox\UntitledSandbox\</LoggerRootDirectory>
-      <IntermediateDirectory>C:\Users\Frank\Documents\GitHub\UntitledSandbox\UntitledSandbox\UntitledSandbox\UntitledSandboxContent\obj\x86\Debug\</IntermediateDirectory>
-      <OutputDirectory>C:\Users\Frank\Documents\GitHub\UntitledSandbox\UntitledSandbox\UntitledSandbox\UntitledSandbox\bin\x86\Debug\Content\</OutputDirectory>
+      <RootDirectory>C:\Users\Shaun\Documents\GitHub\UntitledSandbox\UntitledSandbox\UntitledSandbox\UntitledSandboxContent\</RootDirectory>
+      <LoggerRootDirectory>C:\Users\Shaun\Documents\GitHub\UntitledSandbox\UntitledSandbox\UntitledSandbox\UntitledSandbox\</LoggerRootDirectory>
+      <IntermediateDirectory>C:\Users\Shaun\Documents\GitHub\UntitledSandbox\UntitledSandbox\UntitledSandbox\UntitledSandboxContent\obj\x86\Debug\</IntermediateDirectory>
+      <OutputDirectory>C:\Users\Shaun\Documents\GitHub\UntitledSandbox\UntitledSandbox\UntitledSandbox\UntitledSandbox\bin\x86\Debug\Content\</OutputDirectory>
     </Settings>
     <Assemblies>
       <Assembly>
@@ -58,8 +58,8 @@
         <Value>2010-08-23T13:41:18-04:00</Value>
       </Assembly>
       <Assembly>
-        <Key>C:\Windows\Microsoft.Net\assembly\GAC_32\Microsoft.Xna.Framework.Content.Pipeline\v4.0_4.0.0.0__842cf8be1de50553\Microsoft.Xna.Framework.Content.Pipeline.dll</Key>
-        <Value>2012-12-05T16:03:49.7202295-05:00</Value>
+        <Key>C:\windows\Microsoft.Net\assembly\GAC_32\Microsoft.Xna.Framework.Content.Pipeline\v4.0_4.0.0.0__842cf8be1de50553\Microsoft.Xna.Framework.Content.Pipeline.dll</Key>
+        <Value>2014-02-20T10:26:55.6924244-05:00</Value>
       </Assembly>
     </Assemblies>
   </Asset>

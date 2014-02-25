@@ -43,6 +43,8 @@ namespace UntitledSandbox.PlayerData
 
 			this._keyboardState = Keyboard.GetState();
 			this._mouseState = Mouse.GetState();
+
+			this.Camera.UpdateViewMatrix();
 		}
 	}
 }

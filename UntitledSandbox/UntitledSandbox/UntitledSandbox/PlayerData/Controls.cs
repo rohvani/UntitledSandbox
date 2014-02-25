@@ -29,8 +29,6 @@ namespace UntitledSandbox.PlayerData
 				this.Player.Camera.RotationYaw -= this.Player.Camera.RotationSpeed * xDifference * amount;
 				this.Player.Camera.RotationPitch -= this.Player.Camera.RotationSpeed * yDifference * amount;
 				Mouse.SetPosition(Game.Instance.graphics.GraphicsDevice.Viewport.Width / 2, Game.Instance.graphics.GraphicsDevice.Viewport.Height / 2);
-				this.Player.Camera.UpdateViewMatrix();
-				this.Player.Camera.Frustum.Matrix = (this.Player.Camera.ViewMatrix * this.Player.Camera.ProjectionMatrix);
 			}
 
 			Vector3 moveVector = new Vector3(0, 0, 0);

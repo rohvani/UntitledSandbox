@@ -12,3 +12,10 @@ C:\Users\Frank\Documents\GitHub\UntitledSandbox\UntitledSandbox\UntitledSandbox\
 C:\Users\Frank\Documents\GitHub\UntitledSandbox\UntitledSandbox\UntitledSandbox\UntitledSandbox\obj\x86\Debug\Microsoft.Xna.Framework.RuntimeProfile.txt
 C:\Users\Frank\Documents\GitHub\UntitledSandbox\UntitledSandbox\UntitledSandbox\UntitledSandbox\obj\x86\Debug\UntitledSandbox.exe
 C:\Users\Frank\Documents\GitHub\UntitledSandbox\UntitledSandbox\UntitledSandbox\UntitledSandbox\obj\x86\Debug\UntitledSandbox.pdb
+C:\Users\Shaun\Documents\GitHub\UntitledSandbox\UntitledSandbox\UntitledSandbox\UntitledSandbox\bin\x86\Debug\Content\cube.xnb
+C:\Users\Shaun\Documents\GitHub\UntitledSandbox\UntitledSandbox\UntitledSandbox\UntitledSandbox\bin\x86\Debug\UntitledSandbox.exe
+C:\Users\Shaun\Documents\GitHub\UntitledSandbox\UntitledSandbox\UntitledSandbox\UntitledSandbox\bin\x86\Debug\UntitledSandbox.pdb
+C:\Users\Shaun\Documents\GitHub\UntitledSandbox\UntitledSandbox\UntitledSandbox\UntitledSandbox\obj\x86\Debug\UntitledSandbox.csprojResolveAssemblyReference.cache
+C:\Users\Shaun\Documents\GitHub\UntitledSandbox\UntitledSandbox\UntitledSandbox\UntitledSandbox\obj\x86\Debug\Microsoft.Xna.Framework.RuntimeProfile.txt
+C:\Users\Shaun\Documents\GitHub\UntitledSandbox\UntitledSandbox\UntitledSandbox\UntitledSandbox\obj\x86\Debug\UntitledSandbox.exe
+C:\Users\Shaun\Documents\GitHub\UntitledSandbox\UntitledSandbox\UntitledSandbox\UntitledSandbox\obj\x86\Debug\UntitledSandbox.pdb

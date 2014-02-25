@@ -92,6 +92,8 @@ namespace UntitledSandbox.PlayerData
 			Vector3 cameraRotatedUpVector = Vector3.Transform(cameraOriginalUpVector, cameraRotation);
 
 			this.ViewMatrix = Matrix.CreateLookAt(this.Position, cameraFinalTarget, cameraRotatedUpVector);
+
+			this.Frustum.Matrix = (this.ViewMatrix * this.ProjectionMatrix);
 		}
 
 		public void AddToCameraPosition(Vector3 vectorToAdd)
