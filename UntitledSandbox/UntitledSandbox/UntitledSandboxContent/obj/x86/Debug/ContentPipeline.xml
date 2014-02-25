@@ -7,11 +7,11 @@
       <Importer>FbxImporter</Importer>
       <Processor>ModelProcessor</Processor>
       <Options>None</Options>
-      <Output>C:\Users\Frank\Dropbox\Shared\UntitledSandbox\UntitledSandbox\UntitledSandbox\UntitledSandbox\bin\x86\Debug\Content\cube.xnb</Output>
-      <Time>2014-02-20T10:48:05.2275451-05:00</Time>
+      <Output>C:\Users\Frank\Documents\GitHub\UntitledSandbox\UntitledSandbox\UntitledSandbox\UntitledSandbox\bin\x86\Debug\Content\cube.xnb</Output>
+      <Time>2014-02-25T10:18:26.3148993-05:00</Time>
       <Dependency>
         <Key>obj\x86\Debug\cube_0.xml</Key>
-        <Value>2014-02-20T10:58:44.4361057-05:00</Value>
+        <Value>2014-02-25T10:24:54.4240979-05:00</Value>
       </Dependency>
     </Item>
     <Item>
@@ -19,7 +19,7 @@
       <Importer>FbxImporter</Importer>
       <Options>IntermediateFile, DontCacheImportedData</Options>
       <Output>obj\x86\Debug\cube_0.xml</Output>
-      <Time>2014-02-20T10:48:05.2275451-05:00</Time>
+      <Time>2014-02-25T10:18:26.3148993-05:00</Time>
     </Item>
     <BuildSuccessful>true</BuildSuccessful>
     <Settings>
@@ -27,10 +27,10 @@
       <TargetProfile>HiDef</TargetProfile>
       <BuildConfiguration>Debug</BuildConfiguration>
       <CompressContent>false</CompressContent>
-      <RootDirectory>C:\Users\Frank\Dropbox\Shared\UntitledSandbox\UntitledSandbox\UntitledSandbox\UntitledSandboxContent\</RootDirectory>
-      <LoggerRootDirectory>C:\Users\Frank\Dropbox\Shared\UntitledSandbox\UntitledSandbox\UntitledSandbox\UntitledSandbox\</LoggerRootDirectory>
-      <IntermediateDirectory>C:\Users\Frank\Dropbox\Shared\UntitledSandbox\UntitledSandbox\UntitledSandbox\UntitledSandboxContent\obj\x86\Debug\</IntermediateDirectory>
-      <OutputDirectory>C:\Users\Frank\Dropbox\Shared\UntitledSandbox\UntitledSandbox\UntitledSandbox\UntitledSandbox\bin\x86\Debug\Content\</OutputDirectory>
+      <RootDirectory>C:\Users\Frank\Documents\GitHub\UntitledSandbox\UntitledSandbox\UntitledSandbox\UntitledSandboxContent\</RootDirectory>
+      <LoggerRootDirectory>C:\Users\Frank\Documents\GitHub\UntitledSandbox\UntitledSandbox\UntitledSandbox\UntitledSandbox\</LoggerRootDirectory>
+      <IntermediateDirectory>C:\Users\Frank\Documents\GitHub\UntitledSandbox\UntitledSandbox\UntitledSandbox\UntitledSandboxContent\obj\x86\Debug\</IntermediateDirectory>
+      <OutputDirectory>C:\Users\Frank\Documents\GitHub\UntitledSandbox\UntitledSandbox\UntitledSandbox\UntitledSandbox\bin\x86\Debug\Content\</OutputDirectory>
     </Settings>
     <Assemblies>
       <Assembly>

@@ -54,6 +54,8 @@ namespace UntitledSandbox.PlayerData
 			set { this._projectionMatrix = value; }
 		}
 
+		public BoundingFrustum Frustum;
+
 		public Camera(Vector3 position, float cameraMoveSpeed)
 		{
 			this._position = position;
@@ -66,6 +68,8 @@ namespace UntitledSandbox.PlayerData
 
 			this._viewMatrix = new Matrix();
 			this._projectionMatrix = new Matrix();
+
+			this.Frustum = new BoundingFrustum(this.ViewMatrix * this.ProjectionMatrix);
 		}
 
 		public Camera(Vector3 position) : this(position, 30.0F)

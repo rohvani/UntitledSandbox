@@ -24,7 +24,7 @@ namespace UntitledSandbox
 		private float aspectRatio;
 		private double lastUpdate = 0;
 		private List<CModel> objectList = new List<CModel>();
-		private Player player;
+		public Player player;
 
 		public Game()
 		{
@@ -50,9 +50,9 @@ namespace UntitledSandbox
 			Model cubeModel = Content.Load<Model>("cube");
 			
 			// [WorldLogic] Create a 5x5 map of cubes
-			for (int x = 0; x < (5 * 2); x += 2)
+			for (int x = 0; x < (100 * 2); x += 2)
 			{
-				for (int z = 0; z < (5 * 2); z += 2)
+				for (int z = 0; z < (100 * 2); z += 2)
 				{
 					objectList.Add(new CModel(cubeModel, new Vector3(x, 0, z)));
 				}
@@ -97,29 +97,33 @@ namespace UntitledSandbox
 
 			foreach (CModel gameObj in this.objectList)
 			{
-				// Draw the model. A model can have multiple meshes, so loop.
-				foreach (ModelMesh mesh in gameObj.Model.Meshes)
+				ContainmentType currentContainmentType = player.Camera.Frustum.Contains(gameObj.Model.Meshes[0].BoundingSphere);
+				if (currentContainmentType != ContainmentType.Disjoint)
 				{
-					Matrix[] transforms = new Matrix[gameObj.Model.Bones.Count];
-					gameObj.Model.CopyAbsoluteBoneTransformsTo(transforms);
-
-					// This is where the mesh orientation is set, as well 
-					// as our camera and projection.
-					foreach (BasicEffect effect in mesh.Effects)
+					// Draw the model. A model can have multiple meshes, so loop.
+					foreach (ModelMesh mesh in gameObj.Model.Meshes)
 					{
-						effect.EnableDefaultLighting();
+						Matrix[] transforms = new Matrix[gameObj.Model.Bones.Count];
+						gameObj.Model.CopyAbsoluteBoneTransformsTo(transforms);
 
-						effect.World = transforms[mesh.ParentBone.Index] 
-							* Matrix.CreateRotationY(gameObj.Rotation) 
-							* Matrix.CreateTranslation(gameObj.Position);
+						// This is where the mesh orientation is set, as well 
+						// as our camera and projection.
+						foreach (BasicEffect effect in mesh.Effects)
+						{
+							effect.EnableDefaultLighting();
 
-						effect.View = this.player.Camera.ViewMatrix;
+							effect.World = transforms[mesh.ParentBone.Index]
+								* Matrix.CreateRotationY(gameObj.Rotation)
+								* Matrix.CreateTranslation(gameObj.Position);
 
-						effect.Projection 
-							= Matrix.CreatePerspectiveFieldOfView(MathHelper.ToRadians(45.0f), this.aspectRatio, 1.0f, 10000.0f);
+							effect.View = this.player.Camera.ViewMatrix;
+
+							effect.Projection
+								= Matrix.CreatePerspectiveFieldOfView(MathHelper.ToRadians(45.0f), this.aspectRatio, 1.0f, 10000.0f);
+						}
+						// Draw the mesh, using the effects set above.
+						mesh.Draw();
 					}
-					// Draw the mesh, using the effects set above.
-					mesh.Draw();
 				}
 			}
 			base.Draw(gameTime);
