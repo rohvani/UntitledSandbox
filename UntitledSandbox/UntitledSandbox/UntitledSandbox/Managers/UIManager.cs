@@ -9,11 +9,8 @@ namespace UntitledSandbox.Managers
 {
 	public class UIManager
 	{
-		private Game instance;
-
 		public UIManager()
 		{
-			this.instance = Game.Instance;
 		}
 
 		public void drawText(Vector2 position, string text, Color color)

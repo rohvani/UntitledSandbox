@@ -62,7 +62,7 @@ namespace UntitledSandbox
 		protected override void LoadContent()
 		{
 			// [ContentLogic] Load 3D Content
-			Model cubeModel = contentManager.getModel("models/cube");
+			Model cubeModel = contentManager.getModel("models/cube"); // String literals for constants leave a bad taste in my mouth
 			
 			// [WorldLogic] Create a 5x5 map of cubes
 			for (int x = 0; x < (50 * 2); x += 2)

@@ -45,7 +45,7 @@ namespace UntitledSandbox.PlayerData
 		
 		public Player()
 		{
-			this._camera = new Camera(new Vector3(0,0,0));
+			this._camera = new Camera();
 			this._controls = new Controls(this);
 
 			this._keyboardState = Keyboard.GetState();

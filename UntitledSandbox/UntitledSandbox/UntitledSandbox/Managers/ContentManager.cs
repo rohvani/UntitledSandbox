@@ -7,27 +7,28 @@ namespace UntitledSandbox.Managers
 {
 	public class ContentManager
 	{
-		private Game instance;
 		private List<Model> modelList;
 
 		public ContentManager()
 		{
-			instance = Game.Instance;
-			modelList = new List<Model>();
+			this.modelList = new List<Model>();
 		}
 
 		public Model loadModel(string filePath)
 		{
 			try
 			{
-				Model model = instance.Content.Load<Model>(filePath);
+				Model model = Game.Instance.Content.Load<Model>(filePath);
 				if (model != null)
 				{
-					modelList.Add(model);
+					this.modelList.Add(model);
 					return model;
 				}
 			}
-			catch { Console.WriteLine("[ContentManager] Error loading '{0}'", filePath); }
+			catch
+			{
+				Console.WriteLine("[ContentManager] Error loading '{0}'", filePath);
+			}
 
 			return null;
 		}
@@ -36,7 +37,7 @@ namespace UntitledSandbox.Managers
 		{
 			try
 			{
-				return modelList.First(p => p.Tag.Equals(filePath));
+				return this.modelList.First(p => p.Tag.Equals(filePath));
 			}
 			catch
 			{
