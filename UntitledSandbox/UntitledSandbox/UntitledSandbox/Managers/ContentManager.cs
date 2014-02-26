@@ -19,18 +19,14 @@ namespace UntitledSandbox.Managers
 			try
 			{
 				Model model = Game.Instance.Content.Load<Model>(filePath);
-				if (model != null)
-				{
-					this.modelList.Add(model);
-					return model;
-				}
+				if (model != null) this.modelList.Add(model);
+				return model;
 			}
 			catch
 			{
 				Console.WriteLine("[ContentManager] Error loading '{0}'", filePath);
+				return null;
 			}
-
-			return null;
 		}
 
 		public Model getModel(string filePath)

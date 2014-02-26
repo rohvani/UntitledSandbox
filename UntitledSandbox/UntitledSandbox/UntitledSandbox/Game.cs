@@ -110,14 +110,17 @@ namespace UntitledSandbox
 					sphere = mesh.BoundingSphere.Transform(world);
 					
 					foreach (BasicEffect effect in mesh.Effects)
-					{
-						effect.EnableDefaultLighting();
-						
+					{	
 						effect.World = world;
 
 						effect.View = this.player.Camera.ViewMatrix;
 
 						effect.Projection = this.player.Camera.ProjectionMatrix;
+
+						// Placeholder lighting
+						effect.LightingEnabled = true;
+						effect.AmbientLightColor = new Vector3(0.25f, 0.25f, 0.25f);
+						effect.DirectionalLight0.Direction = new Vector3(0f, -1f, 0f);
 					}
 
 					if (this.player.Camera.Frustum.Contains(sphere) != ContainmentType.Disjoint) 
