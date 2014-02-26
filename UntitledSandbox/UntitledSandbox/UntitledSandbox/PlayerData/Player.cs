@@ -31,10 +31,17 @@ namespace UntitledSandbox.PlayerData
 			get { return this._mouseState; }
 		}
 
+		public bool MouseLook
+		{
+			get { return this._mouseLook; }
+			set { this._mouseLook = value; }
+		}
+
 		private Camera _camera;
 		private Controls _controls;
 		private KeyboardState _keyboardState;
 		private MouseState _mouseState;
+		private bool _mouseLook;
 		
 		public Player()
 		{
@@ -43,6 +50,8 @@ namespace UntitledSandbox.PlayerData
 
 			this._keyboardState = Keyboard.GetState();
 			this._mouseState = Mouse.GetState();
+
+			this._mouseLook = true;
 
 			this.Camera.UpdateViewMatrix();
 		}

@@ -10,10 +10,10 @@ FBXHeaderExtension:  {
 		Version: 1000
 		Year: 2014
 		Month: 02
-		Day: 20
-		Hour: 10
-		Minute: 47
-		Second: 58
+		Day: 25
+		Hour: 19
+		Minute: 28
+		Second: 44
 		Millisecond: 0
 	}
 	Creator: "FBX SDK/FBX Plugins build 20070228"
@@ -21,15 +21,15 @@ FBXHeaderExtension:  {
 		FlagPLE: 0
 	}
 }
-CreationTime: "2014-02-20 10:47:58:000"
-Creator: "Blender version 2.62 (sub 0)"
+CreationTime: "2014-02-25 19:28:44:000"
+Creator: "Blender version 2.69 (sub 0)"
 
 ; Object definitions
 ;------------------------------------------------------------------
 
 Definitions:  {
 	Version: 100
-	Count: 14
+	Count: 15
 	ObjectType: "Model" {
 		Count: 11
 	}
@@ -37,7 +37,13 @@ Definitions:  {
 		Count: 1
 	}
 	ObjectType: "Material" {
-		Count: 2
+		Count: 1
+	}
+	ObjectType: "Texture" {
+		Count: 1
+	}
+	ObjectType: "Video" {
+		Count: 1
 	}
 	ObjectType: "Pose" {
 		Count: 1
@@ -142,8 +148,8 @@ Objects:  {
 			Property: "QuaternionInterpolate", "bool", "",0
 			Property: "Visibility", "Visibility", "A+",1
 			Property: "Lcl Translation", "Lcl Translation", "A+",7.481131553649902,5.343665122985840,6.507639884948730
-			Property: "Lcl Rotation", "Lcl Rotation", "A+",23.240196764176893,142.362356870423241,34.212065797802460
-			Property: "Lcl Scaling", "Lcl Scaling", "A+",1.000000000000000,0.999999880790710,1.000000000000000
+			Property: "Lcl Rotation", "Lcl Rotation", "A+",23.240195056629602,142.362356870423241,34.212069212897042
+			Property: "Lcl Scaling", "Lcl Scaling", "A+",1.000000000000000,0.999999940395355,1.000000000000000
 			Property: "RotationOffset", "Vector3D", "",0,0,0
 			Property: "RotationPivot", "Vector3D", "",0,0,0
 			Property: "ScalingOffset", "Vector3D", "",0,0,0
@@ -211,9 +217,9 @@ Objects:  {
 			Property: "Size", "double", "",100
 			Property: "Look", "enum", "",1
 			Property: "Roll", "Roll", "A+",0
-			Property: "FieldOfView", "FieldOfView", "A+",28.841546
-			Property: "FieldOfViewX", "FieldOfView", "A+",1
-			Property: "FieldOfViewY", "FieldOfView", "A+",1
+			Property: "FieldOfView", "FieldOfView", "A+",49.134342
+			Property: "FieldOfViewX", "FieldOfView", "A+",49.134342
+			Property: "FieldOfViewY", "FieldOfView", "A+",28.841546
 			Property: "FocalLength", "Number", "A+",35.000000
 			Property: "FilmOffsetX", "Number", "A+",0.000000
 			Property: "FilmOffsetY", "Number", "A+",0.000000
@@ -297,8 +303,8 @@ Objects:  {
 			Property: "QuaternionInterpolate", "bool", "",0
 			Property: "Visibility", "Visibility", "A+",1
 			Property: "Lcl Translation", "Lcl Translation", "A+",4.076245307922363,5.903861999511719,-1.005453944206238
-			Property: "Lcl Rotation", "Lcl Rotation", "A+",47.533567717233218,107.220753553002154,10.743659606851072
-			Property: "Lcl Scaling", "Lcl Scaling", "A+",1.000000000000000,1.000000000000000,0.999999821186066
+			Property: "Lcl Rotation", "Lcl Rotation", "A+",47.533574547422390,107.220753553002154,10.743666437040241
+			Property: "Lcl Scaling", "Lcl Scaling", "A+",1.000000000000000,0.999999880790710,1.000000000000000
 			Property: "RotationOffset", "Vector3D", "",0,0,0
 			Property: "RotationPivot", "Vector3D", "",0,0,0
 			Property: "ScalingOffset", "Vector3D", "",0,0,0
@@ -372,7 +378,6 @@ Objects:  {
 			Property: "DrawFrontFacingVolumetricLight", "bool", "",0
 			Property: "GoboProperty", "object", ""
 			Property: "Color", "Color", "A+",1,1,1
-			Property: "Intensity", "Intensity", "A+",100.00
 			Property: "Fog", "Fog", "A+",50
 			Property: "Color", "Color", "A",1.00,1.00,1.00
 			Property: "Intensity", "Intensity", "A+",100.00
@@ -383,14 +388,9 @@ Objects:  {
 			Property: "DrawFrontFacingVolumetricLight", "bool", "",0
 			Property: "DrawVolumetricLight", "bool", "",1
 			Property: "GoboProperty", "object", ""
-			Property: "DecayType", "enum", "",0
-			Property: "DecayStart", "double", "",30.00
-			Property: "EnableNearAttenuation", "bool", "",0
-			Property: "NearAttenuationStart", "double", "",0
-			Property: "NearAttenuationEnd", "double", "",0
-			Property: "EnableFarAttenuation", "bool", "",0
-			Property: "FarAttenuationStart", "double", "",0
-			Property: "FarAttenuationEnd", "double", "",0
+			Property: "DecayType", "enum", "",2
+			Property: "EnableFarAttenuation", "bool", "",1
+			Property: "FarAttenuationEnd", "double", "",60.00
 			Property: "CastShadows", "bool", "",1
 			Property: "ShadowColor", "ColorRGBA", "",0,0,0,1
 		}
@@ -480,20 +480,21 @@ Objects:  {
 		MultiTake: 1
 		Shading: Y
 		Culling: "CullingOff"
-		Vertices: 1.000000,1.000000,-1.000000,1.000000,-1.000000,-1.000000,-1.000000,-1.000000,-1.000000,-1.000000,1.000000,-1.000000,1.000000,0.999999,1.000000,0.999999,-1.000001,1.000000,-1.000000,-1.000000,1.000000
-		,-1.000000,1.000000,1.000000
+		Vertices: 1.000000,2.558225,-1.000000,1.000000,0.558225,-1.000000,-1.000000,0.558225,-1.000000,-1.000000,2.558225,-1.000000,
+		          1.000000,2.558224,1.000000,0.999999,0.558224,1.000000,-1.000000,0.558225,1.000000,-1.000000,2.558225,1.000000
 		PolygonVertexIndex: 0,1,2,-4,4,7,6,-6,0,4,5,-2,1,5,6,-3,2,6,7,-4,4,0,3,-8
-		Edges: 
 		GeometryVersion: 124
 		LayerElementNormal: 0 {
 			Version: 101
 			Name: ""
-			MappingInformationType: "ByVertice"
+			MappingInformationType: "ByPolygonVertex"
 			ReferenceInformationType: "Direct"
-			Normals: 0.577349185943604,0.577349185943604,-0.577349185943604,0.577349185943604,-0.577349185943604,-0.577349185943604
-			 ,-0.577349185943604,-0.577349185943604,-0.577349185943604,-0.577349185943604,0.577349185943604,-0.577349185943604
-			 ,0.577349185943604,0.577349185943604,0.577349185943604,0.577349185943604,-0.577349185943604,0.577349185943604
-			 ,-0.577349185943604,-0.577349185943604,0.577349185943604,-0.577349185943604,0.577349185943604,0.577349185943604
+			Normals: 0.000000,0.000000,-1.000000,0.000000,0.000000,-1.000000,0.000000,0.000000,-1.000000,0.000000,0.000000,-1.000000,
+			         0.000000,0.000000,1.000000,0.000000,0.000000,1.000000,0.000000,0.000000,1.000000,0.000000,0.000000,1.000000,
+			         1.000000,-0.000000,0.000000,1.000000,-0.000000,0.000000,1.000000,-0.000000,0.000000,1.000000,-0.000000,0.000000,
+			         -0.000000,-1.000000,-0.000000,-0.000000,-1.000000,-0.000000,-0.000000,-1.000000,-0.000000,-0.000000,-1.000000,-0.000000,
+			         -1.000000,0.000000,-0.000000,-1.000000,0.000000,-0.000000,-1.000000,0.000000,-0.000000,-1.000000,0.000000,-0.000000,
+			         0.000000,1.000000,0.000000,0.000000,1.000000,0.000000,0.000000,1.000000,0.000000,0.000000,1.000000,0.000000
 		}
 		LayerElementSmoothing: 0 {
 			Version: 102
@@ -501,6 +502,23 @@ Objects:  {
 			MappingInformationType: "ByPolygon"
 			ReferenceInformationType: "Direct"
 			Smoothing: 0,0,0,0,0,0
+		}
+		LayerElementUV: 0 {
+			Version: 101
+			Name: "UVMap"
+			MappingInformationType: "ByPolygonVertex"
+			ReferenceInformationType: "IndexToDirect"
+			UV: 0.062500,0.437500,0.125000,0.437500,0.062500,0.375000,0.125000,0.375000
+			UVIndex: 2,3,1,0,2,3,1,0,2,3,1,0,2,3,1,0,2,3,1,0,2,3,1,0
+		}
+		LayerElementTexture: 0 {
+			Version: 101
+			Name: "UVMap"
+			MappingInformationType: "AllSame"
+			ReferenceInformationType: "IndexToDirect"
+			BlendMode: "Translucent"
+			TextureAlpha: 1
+			TextureId: 0
 		}
 		LayerElementMaterial: 0 {
 			Version: 101
@@ -516,15 +534,22 @@ Objects:  {
 				TypedIndex: 0
 			}
 			LayerElement:  {
-				Type: "LayerElementMaterial"
-				TypedIndex: 0
-			}
-			LayerElement:  {
 				Type: "LayerElementSmoothing"
 				TypedIndex: 0
 			}
-		},1.000000,1.000000,-1.000000
-		,1.000000,-1.000000,-1.000000,-1.000000,-1.000000,-1.000000,-1.000000,1.000000,-1.000000,1.000000,0.999999,1.000000,0.999999,-1.000001,1.000000,-1.000000,-1.000000,1.000000,-1.000000,1.000000,1.000000
+			LayerElement:  {
+				Type: "LayerElementUV"
+				TypedIndex: 0
+			}
+			LayerElement:  {
+				Type: "LayerElementTexture"
+				TypedIndex: 0
+			}
+			LayerElement:  {
+				Type: "LayerElementMaterial"
+				TypedIndex: 0
+			}
+		}
 	}
 	Model: "Model::Producer Perspective", "Camera" {
 		Version: 232
@@ -1604,7 +1629,7 @@ Objects:  {
 		AudioColor: 0,1,0
 		CameraOrthoZoom: 1
 	}
-	Material: "Material::Material", "" {
+	Material: "Material::Material__terrain_png", "" {
 		Version: 102
 		ShadingModel: "lambert"
 		MultiLayer: 0
@@ -1613,7 +1638,7 @@ Objects:  {
 			Property: "MultiLayer", "bool", "",0
 			Property: "EmissiveColor", "ColorRGB", "",0.8000,0.8000,0.8000
 			Property: "EmissiveFactor", "double", "",0.0000
-			Property: "AmbientColor", "ColorRGB", "",0.0000,0.0000,0.0000
+			Property: "AmbientColor", "ColorRGB", "",1.0000,1.0000,1.0000
 			Property: "AmbientFactor", "double", "",1.0000
 			Property: "DiffuseColor", "ColorRGB", "",0.8000,0.8000,0.8000
 			Property: "DiffuseFactor", "double", "",0.8000
@@ -1621,48 +1646,68 @@ Objects:  {
 			Property: "TransparentColor", "ColorRGB", "",1,1,1
 			Property: "TransparencyFactor", "double", "",0.0000
 			Property: "SpecularColor", "ColorRGB", "",1.0000,1.0000,1.0000
-			Property: "SpecularFactor", "double", "",0.2500
-			Property: "ShininessExponent", "double", "",80.0
+			Property: "SpecularFactor", "double", "",0.5000
+			Property: "ShininessExponent", "double", "",12.3
 			Property: "ReflectionColor", "ColorRGB", "",0,0,0
 			Property: "ReflectionFactor", "double", "",1
 			Property: "Emissive", "ColorRGB", "",0,0,0
-			Property: "Ambient", "ColorRGB", "",0.0,0.0,0.0
+			Property: "Ambient", "ColorRGB", "",1.0,1.0,1.0
 			Property: "Diffuse", "ColorRGB", "",0.8,0.8,0.8
 			Property: "Specular", "ColorRGB", "",1.0,1.0,1.0
-			Property: "Shininess", "double", "",9.6
+			Property: "Shininess", "double", "",12.3
 			Property: "Opacity", "double", "",1.0
 			Property: "Reflectivity", "double", "",0
 		}
 	}
-	Material: "Material::unnamed", "" {
-		Version: 102
-		ShadingModel: "phong"
-		MultiLayer: 0
+	Video: "Video::terrain_png", "Clip" {
+		Type: "Clip"
 		Properties60:  {
-			Property: "ShadingModel", "KString", "", "Phong"
-			Property: "MultiLayer", "bool", "",0
-			Property: "EmissiveColor", "ColorRGB", "",0.8000,0.8000,0.8000
-			Property: "EmissiveFactor", "double", "",0.0000
-			Property: "AmbientColor", "ColorRGB", "",0.0000,0.0000,0.0000
-			Property: "AmbientFactor", "double", "",0.5000
-			Property: "DiffuseColor", "ColorRGB", "",0.8000,0.8000,0.8000
-			Property: "DiffuseFactor", "double", "",1.0000
-			Property: "Bump", "Vector3D", "",0,0,0
-			Property: "TransparentColor", "ColorRGB", "",1,1,1
-			Property: "TransparencyFactor", "double", "",0.0000
-			Property: "SpecularColor", "ColorRGB", "",0.8000,0.8000,0.8000
-			Property: "SpecularFactor", "double", "",0.2000
-			Property: "ShininessExponent", "double", "",80.0
-			Property: "ReflectionColor", "ColorRGB", "",0,0,0
-			Property: "ReflectionFactor", "double", "",1
-			Property: "Emissive", "ColorRGB", "",0,0,0
-			Property: "Ambient", "ColorRGB", "",0.0,0.0,0.0
-			Property: "Diffuse", "ColorRGB", "",0.8,0.8,0.8
-			Property: "Specular", "ColorRGB", "",0.8,0.8,0.8
-			Property: "Shininess", "double", "",20.0
-			Property: "Opacity", "double", "",1.0
-			Property: "Reflectivity", "double", "",0
+			Property: "FrameRate", "double", "",0
+			Property: "LastFrame", "int", "",0
+			Property: "Width", "int", "",0
+			Property: "Height", "int", "",0
+			Property: "Path", "charptr", "", "terrain.png"
+			Property: "StartFrame", "int", "",0
+			Property: "StopFrame", "int", "",0
+			Property: "PlaySpeed", "double", "",1
+			Property: "Offset", "KTime", "",0
+			Property: "InterlaceMode", "enum", "",0
+			Property: "FreeRunning", "bool", "",0
+			Property: "Loop", "bool", "",0
+			Property: "AccessMode", "enum", "",0
 		}
+		UseMipMap: 0
+		Filename: "terrain.png"
+		RelativeFilename: "terrain.png"
+	}
+	Texture: "Texture::terrain_png", "TextureVideoClip" {
+		Type: "TextureVideoClip"
+		Version: 202
+		TextureName: "Texture::terrain_png"
+		Properties60:  {
+			Property: "Translation", "Vector", "A+",0,0,0
+			Property: "Rotation", "Vector", "A+",0,0,0
+			Property: "Scaling", "Vector", "A+",1,1,1
+			Property: "Texture alpha", "Number", "A+",0
+			Property: "TextureTypeUse", "enum", "",0
+			Property: "CurrentTextureBlendMode", "enum", "",1
+			Property: "UseMaterial", "bool", "",0
+			Property: "UseMipMap", "bool", "",0
+			Property: "CurrentMappingType", "enum", "",0
+			Property: "UVSwap", "bool", "",0
+			Property: "WrapModeU", "enum", "",0
+			Property: "WrapModeV", "enum", "",0
+			Property: "TextureRotationPivot", "Vector3D", "",0,0,0
+			Property: "TextureScalingPivot", "Vector3D", "",0,0,0
+			Property: "VideoProperty", "object", ""
+		}
+		Media: "Video::terrain_png"
+		FileName: "terrain.png"
+		RelativeFilename: "terrain.png"
+		ModelUVTranslation: 0,0
+		ModelUVScaling: 1,1
+		Texture_Alpha_Source: "None"
+		Cropping: 0,0,0,0
 	}
 	Pose: "Pose::BIND_POSES", "BindPose" {
 		Type: "BindPose"
@@ -1672,7 +1717,7 @@ Objects:  {
 		NbPoseNodes: 1
 		PoseNode:  {
 			Node: "Model::Cube"
-			Matrix: 1.000000000000000,0.000000000000000,0.000000000000000,0.000000000000000,0.000000000000000,0.000000000000000,-1.000000000000000,0.000000000000000,0.000000000000000,1.000000000000000,0.000000000000000,0.000000000000000,0.000000000000000,0.000000000000000,0.000000000000000,1.000000000000000
+			Matrix: 0.000000075497901,0.000000000000000,-1.000000000000000,0.000000000000000,-1.000000000000000,0.000000000000000,-0.000000075497901,0.000000000000000,0.000000000000000,1.000000000000000,0.000000000000000,0.000000000000000,0.000000000000000,0.000000000000000,0.000000000000000,1.000000000000000
 		}
 	}
 	GlobalSettings:  {
@@ -1715,9 +1760,11 @@ Relations:  {
 	}
 	Model: "Model::Camera Switcher", "CameraSwitcher" {
 	}
-	Material: "Material::Material", "" {
+	Material: "Material::Material__terrain_png", "" {
 	}
-	Material: "Material::unnamed", "" {
+	Texture: "Texture::terrain_png", "TextureVideoClip" {
+	}
+	Video: "Video::terrain_png", "Clip" {
 	}
 }
 
@@ -1728,7 +1775,9 @@ Connections:  {
 	Connect: "OO", "Model::Cube", "Model::Scene"
 	Connect: "OO", "Model::Lamp", "Model::Scene"
 	Connect: "OO", "Model::Camera", "Model::Scene"
-	Connect: "OO", "Material::Material", "Model::Cube"
+	Connect: "OO", "Material::Material__terrain_png", "Model::Cube"
+	Connect: "OO", "Texture::terrain_png", "Model::Cube"
+	Connect: "OO", "Video::terrain_png", "Texture::terrain_png"
 }
 ;Takes and animation section
 ;----------------------------------------------------
@@ -1860,11 +1909,11 @@ Takes:  {
 				}
 				Channel: "R" {
 					Channel: "X" {
-						Default: 23.240195056629602
+						Default: 23.240198471724188
 						KeyVer: 4005
 						KeyCount: 1
 						Key: 
-							1924423250,23.240195056629602,L
+							1924423250,23.240198471724188,L
 						Color: 1,0,0
 					}
 					Channel: "Y" {
@@ -1895,11 +1944,11 @@ Takes:  {
 						Color: 1,0,0
 					}
 					Channel: "Y" {
-						Default: 0.999999880790710
+						Default: 0.999999940395355
 						KeyVer: 4005
 						KeyCount: 1
 						Key: 
-							1924423250,0.999999880790710,L
+							1924423250,0.999999940395355,L
 						Color: 0,1,0
 					}
 					Channel: "Z" {
@@ -1946,11 +1995,11 @@ Takes:  {
 				}
 				Channel: "R" {
 					Channel: "X" {
-						Default: 47.533571132327808
+						Default: 47.533574547422390
 						KeyVer: 4005
 						KeyCount: 1
 						Key: 
-							1924423250,47.533571132327808,L
+							1924423250,47.533574547422390,L
 						Color: 1,0,0
 					}
 					Channel: "Y" {
@@ -1981,19 +2030,19 @@ Takes:  {
 						Color: 1,0,0
 					}
 					Channel: "Y" {
+						Default: 0.999999880790710
+						KeyVer: 4005
+						KeyCount: 1
+						Key: 
+							1924423250,0.999999880790710,L
+						Color: 0,1,0
+					}
+					Channel: "Z" {
 						Default: 1.000000000000000
 						KeyVer: 4005
 						KeyCount: 1
 						Key: 
 							1924423250,1.000000000000000,L
-						Color: 0,1,0
-					}
-					Channel: "Z" {
-						Default: 0.999999821186066
-						KeyVer: 4005
-						KeyCount: 1
-						Key: 
-							1924423250,0.999999821186066,L
 						Color: 0,0,1
 					}
 					LayerType: 3
@@ -2011,7 +2060,7 @@ Version5:  {
 		AmbientLightColor: 0.0,0.0,0.0,0
 	}
 	FogOptions:  {
-		FlogEnable: 0
+		FogEnable: 0
 		FogMode: 0
 		FogDensity: 0.000
 		FogStart: 5.000
