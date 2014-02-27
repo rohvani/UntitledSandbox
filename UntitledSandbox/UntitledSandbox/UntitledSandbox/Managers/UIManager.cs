@@ -13,14 +13,14 @@ namespace UntitledSandbox.Managers
 		{
 		}
 
-		public void drawText(Vector2 position, string text, Color color)
+		public void DrawText(Vector2 position, string text, Color color)
 		{
 			
 		}
 
-		public void drawText(Vector2 position, string text)
+		public void DrawText(Vector2 position, string text)
 		{
-			this.drawText(position, text, Color.White);
+			this.DrawText(position, text, Color.White);
 		}
 	}
 }

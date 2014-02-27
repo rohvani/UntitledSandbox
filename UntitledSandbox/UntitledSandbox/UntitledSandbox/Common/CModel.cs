@@ -5,24 +5,19 @@ namespace UntitledSandbox.Common
 {
 	public class CModel
 	{
-		public Model Model { get { return this._model; } }
-		public Vector3 Position { get { return this._position; } }
-		public float Rotation { get { return this._rotation; } }
-		public Matrix[] Transforms { get { return this._transforms; } }
-
-		private Model _model;
-		private Vector3 _position;
-		private float _rotation;
-		private Matrix[] _transforms;
+		public Model Model { get; private set; }
+		public Vector3 Position { get; private set; }
+		public float Rotation { get; private set; }
+		public Matrix[] Transforms { get; private set; }
 
 		public CModel(Model model, Vector3 position, float rotation)
 		{
-			this._model = model;
-			this._position = position;
-			this._rotation = rotation;
+			this.Model = model;
+			this.Position = position;
+			this.Rotation = rotation;
 
-			this._transforms = new Matrix[this.Model.Bones.Count];
-			this.Model.CopyAbsoluteBoneTransformsTo(this._transforms);
+			this.Transforms = new Matrix[this.Model.Bones.Count];
+			this.Model.CopyAbsoluteBoneTransformsTo(this.Transforms);
 		}
 
 		public CModel(Model model, Vector3 position) : this(model, position, 0)

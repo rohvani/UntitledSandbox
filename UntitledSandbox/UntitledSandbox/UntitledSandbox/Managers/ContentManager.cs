@@ -7,19 +7,19 @@ namespace UntitledSandbox.Managers
 {
 	public class ContentManager
 	{
-		private List<Model> modelList;
+		private List<Model> Models { get; set; }
 
 		public ContentManager()
 		{
-			this.modelList = new List<Model>();
+			this.Models = new List<Model>();
 		}
 
-		public Model loadModel(string filePath)
+		public Model LoadModel(string filePath)
 		{
 			try
 			{
 				Model model = Game.Instance.Content.Load<Model>(filePath);
-				if (model != null) this.modelList.Add(model);
+				if (model != null) this.Models.Add(model);
 				return model;
 			}
 			catch
@@ -29,15 +29,15 @@ namespace UntitledSandbox.Managers
 			}
 		}
 
-		public Model getModel(string filePath)
+		public Model GetModel(string filePath)
 		{
 			try
 			{
-				return this.modelList.First(p => p.Tag.Equals(filePath));
+				return this.Models.First(p => p.Tag.Equals(filePath));
 			}
 			catch
 			{
-				return loadModel(filePath);
+				return LoadModel(filePath);
 			}
 		}
 	}

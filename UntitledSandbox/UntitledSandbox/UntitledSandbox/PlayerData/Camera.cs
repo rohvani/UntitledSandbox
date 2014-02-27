@@ -1,79 +1,35 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using System;
+using Microsoft.Xna.Framework.Input;
 
 namespace UntitledSandbox.PlayerData
 {
 	public class Camera
 	{
-		private Vector3 _position;
-		public Vector3 Position
-		{
-			get { return this._position; }
-			set { this._position = value; }
-		}
-
-		private float _rotationYaw;
-		public float RotationYaw
-		{
-			get { return this._rotationYaw; }
-			set { this._rotationYaw = value; }
-		}
-
-		private float _rotationPitch;
-		public float RotationPitch
-		{
-			get { return this._rotationPitch; }
-			set { this._rotationPitch = value; }
-		}
-
-		private float _rotationSpeed;
-		public float RotationSpeed
-		{
-			get { return this._rotationSpeed; }
-			set { this._rotationSpeed = value; }
-		}
-
-		private float _moveSpeed;
-		public float MoveSpeed
-		{
-			get { return this._moveSpeed; }
-			set { this._moveSpeed = value; }
-		}
-
-		private Matrix _viewMatrix;
-		public Matrix ViewMatrix
-		{
-			get { return this._viewMatrix; }
-			set { this._viewMatrix = value; }
-		}
-
-		private Matrix _projectionMatrix;
-		public Matrix ProjectionMatrix
-		{
-			get { return this._projectionMatrix; }
-			set { this._projectionMatrix = value; }
-		}
-
-		private BoundingFrustum _frustum;
-		public BoundingFrustum Frustum
-		{
-			get { return this._frustum; }
-		}
+		public Vector3 Position { get; set; }
+		public float RotationYaw { get; set; }
+		public float RotationPitch { get; set; }
+		public float RotationSpeed { get; set; }
+		public float MoveSpeed { get; set; }
+		public Matrix ViewMatrix { get; set; }
+		public Matrix ProjectionMatrix { get; set; }
+		public BoundingFrustum Frustum { get; private set; }
 
 		public Camera(Vector3 position, float cameraMoveSpeed)
 		{
-			this._position = position;
+			this.Position = position;
 
-			this._rotationYaw = MathHelper.PiOver2;
-			this._rotationPitch = -MathHelper.Pi / 10.0f;
+			this.RotationYaw = MathHelper.PiOver2;
+			this.RotationPitch = -MathHelper.Pi / 10.0f;
 
-			this._rotationSpeed = 0.3f;
-			this._moveSpeed = cameraMoveSpeed;
+			this.RotationSpeed = 0.3f;
+			this.MoveSpeed = cameraMoveSpeed;
 
-			this._viewMatrix = new Matrix();
-			this._projectionMatrix = new Matrix();
+			this.ViewMatrix = new Matrix();
+			this.ProjectionMatrix = new Matrix();
 
-			this._frustum = new BoundingFrustum(this.ViewMatrix * this.ProjectionMatrix);
+			this.Frustum = new BoundingFrustum(this.ViewMatrix * this.ProjectionMatrix);
 		}
 
 		public Camera(Vector3 position) : this(position, 30.0F)

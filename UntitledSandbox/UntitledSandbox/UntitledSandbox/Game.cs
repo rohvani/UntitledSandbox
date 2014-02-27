@@ -12,48 +12,48 @@ namespace UntitledSandbox
 {
 	public class Game : Microsoft.Xna.Framework.Game
 	{
-		private static Game _instance;
+		public static Game Instance { get; private set; }
 
-		public static Game Instance
-		{
-			get { return _instance; }
-		}
+		public SpriteBatch SpriteBatch { get; private set; }
+		public ContentManager ContentManager { get; private set; }
+		public UIManager UIManager { get; private set; }
 
-		public GraphicsDeviceManager graphics;
-		public SpriteBatch spriteBatch;
-		public ContentManager contentManager;
-		public UIManager uiManager;
+		public GraphicsDeviceManager Graphics { get; set; }
+		public Player Player { get; set; }
 
-		public Player player;
-
-		private float aspectRatio;
-		private List<CModel> objectList = new List<CModel>();
+		private List<CModel> CModels { get; set; }
 		
 		public Game()
 		{
-			_instance = this;
+			Instance = this;
 
-			this.graphics = new GraphicsDeviceManager(this);
+			this.CModels = new List<CModel>();
+			this.Graphics = new GraphicsDeviceManager(this);
+
 			Content.RootDirectory = "Content";
 		}
 
+		// TODO Look into GameServiceContainer
 		protected override void Initialize()
 		{
+			// [StartupLogic] Enable Window Resizing
+			this.Window.AllowUserResizing = true;
+			this.Window.ClientSizeChanged += new EventHandler<EventArgs>(Window_ClientSizeChanged);
+
 			// [StartupLogic] Initialize Managers
-			this.contentManager = new ContentManager();
-			this.uiManager = new UIManager();
+			this.ContentManager = new ContentManager();
+			this.UIManager = new UIManager();
 
 			// [StartupLogic] Graphic Devices & Settings
 			this.GraphicsDevice.SamplerStates[0] = SamplerState.PointClamp;
-			this.spriteBatch = new SpriteBatch(GraphicsDevice);
-			this.aspectRatio = this.graphics.GraphicsDevice.Viewport.AspectRatio;
+			this.SpriteBatch = new SpriteBatch(GraphicsDevice);
 
 			// [StartupLogic] Create Player & Update
 			Mouse.SetPosition(GraphicsDevice.Viewport.Width / 2, GraphicsDevice.Viewport.Height / 2);
-			this.player = new Player();
+			this.Player = new Player();
 
-			this.player.Camera.ViewMatrix = Matrix.CreateLookAt(new Vector3(0, 0, -100), Vector3.Zero, Vector3.Up);
-			this.player.Camera.ProjectionMatrix = Matrix.CreatePerspectiveFieldOfView(MathHelper.PiOver4, this.aspectRatio, 0.3f, 1000.0f);
+			this.Player.Camera.ViewMatrix = Matrix.CreateLookAt(new Vector3(0, 0, -100), Vector3.Zero, Vector3.Up);
+			this.Player.Camera.ProjectionMatrix = Matrix.CreatePerspectiveFieldOfView(MathHelper.PiOver4, GraphicsDevice.Viewport.AspectRatio, 0.3f, 1000.0f);
 
 			// [XNA]
 			base.Initialize();
@@ -62,14 +62,14 @@ namespace UntitledSandbox
 		protected override void LoadContent()
 		{
 			// [ContentLogic] Load 3D Content
-			Model cubeModel = contentManager.getModel("models/cube"); // String literals for constants leave a bad taste in my mouth
+			Model cubeModel = ContentManager.GetModel("models/cube"); // String literals for constants leave a bad taste in my mouth
 			
 			// [WorldLogic] Create a 5x5 map of cubes
 			for (int x = 0; x < (50 * 2); x += 2)
 			{
 				for (int z = 0; z < (50 * 2); z += 2)
 				{
-					objectList.Add(new CModel(cubeModel, new Vector3(x, 0, z)));
+					CModels.Add(new CModel(cubeModel, new Vector3(x, 0, z)));
 				}
 			}
 		}
@@ -86,7 +86,7 @@ namespace UntitledSandbox
 			if (Keyboard.GetState().IsKeyDown(Keys.Space)) this.Exit();
 
 			// [GameLogic] Player Controls
-			this.player.Controls.ProcessInput((float) gameTime.ElapsedGameTime.TotalMilliseconds / 1000.0f);
+			this.Player.Controls.ProcessInput((float) gameTime.ElapsedGameTime.TotalMilliseconds / 1000.0f);
 			
 			// [GameLogic]
 			base.Update(gameTime);
@@ -99,7 +99,7 @@ namespace UntitledSandbox
 			Matrix world;
 			BoundingSphere sphere;
 
-			foreach (CModel gameObj in this.objectList)
+			foreach (CModel gameObj in this.CModels)
 			{
 				foreach (ModelMesh mesh in gameObj.Model.Meshes)
 				{
@@ -113,9 +113,9 @@ namespace UntitledSandbox
 					{	
 						effect.World = world;
 
-						effect.View = this.player.Camera.ViewMatrix;
+						effect.View = this.Player.Camera.ViewMatrix;
 
-						effect.Projection = this.player.Camera.ProjectionMatrix;
+						effect.Projection = this.Player.Camera.ProjectionMatrix;
 
 						// Placeholder lighting
 						effect.LightingEnabled = true;
@@ -123,11 +123,21 @@ namespace UntitledSandbox
 						effect.DirectionalLight0.Direction = new Vector3(0f, -1f, 0f);
 					}
 
-					if (this.player.Camera.Frustum.Contains(sphere) != ContainmentType.Disjoint) 
+					if (this.Player.Camera.Frustum.Contains(sphere) != ContainmentType.Disjoint) 
 						mesh.Draw();
 				}
 			}
 			base.Draw(gameTime);
+		}
+
+		void Window_ClientSizeChanged(object sender, EventArgs e)
+		{
+			this.Player.UpdateMouseState();
+		}
+
+		public static void CenterMouse()
+		{
+			Mouse.SetPosition(Instance.GraphicsDevice.Viewport.Width / 2, Instance.GraphicsDevice.Viewport.Height / 2);
 		}
 	}
 }
