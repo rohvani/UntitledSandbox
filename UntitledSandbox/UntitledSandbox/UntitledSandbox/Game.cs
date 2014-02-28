@@ -22,7 +22,8 @@ namespace UntitledSandbox
 		public Player Player { get; set; }
 
 		private List<CModel> CModels { get; set; }
-		
+
+		public static const int MAP_SIZE = 50 * 2;
 		public Game()
 		{
 			Instance = this;
@@ -45,7 +46,6 @@ namespace UntitledSandbox
 			this.UIManager = new UIManager();
 
 			// [StartupLogic] Graphic Devices & Settings
-			this.GraphicsDevice.SamplerStates[0] = SamplerState.PointClamp;
 			this.SpriteBatch = new SpriteBatch(GraphicsDevice);
 
 			// [StartupLogic] Create Player & Update
@@ -65,11 +65,11 @@ namespace UntitledSandbox
 			Model cubeModel = ContentManager.GetModel("models/cube"); // String literals for constants leave a bad taste in my mouth
 			
 			// [WorldLogic] Create a 5x5 map of cubes
-			for (int x = 0; x < (50 * 2); x += 2)
+			for (int x = -MAP_SIZE; x < MAP_SIZE; x += 2)
 			{
-				for (int z = 0; z < (50 * 2); z += 2)
+				for (int z = -MAP_SIZE; z < MAP_SIZE; z += 2)
 				{
-					CModels.Add(new CModel(cubeModel, new Vector3(x, 0, z)));
+					CModels.Add(new CModel(cubeModel, new Vector3(x, -5, z)));
 				}
 			}
 		}
@@ -96,11 +96,15 @@ namespace UntitledSandbox
 		{
 			GraphicsDevice.Clear(Color.Transparent);
 
+			this.DrawSkybox();
+			this.GraphicsDevice.SamplerStates[0] = SamplerState.PointClamp;
+			
 			Matrix world;
 			BoundingSphere sphere;
 
 			foreach (CModel gameObj in this.CModels)
 			{
+
 				foreach (ModelMesh mesh in gameObj.Model.Meshes)
 				{
 					world = gameObj.Transforms[mesh.ParentBone.Index]
@@ -119,7 +123,7 @@ namespace UntitledSandbox
 
 						// Placeholder lighting
 						effect.LightingEnabled = true;
-						effect.AmbientLightColor = new Vector3(0.25f, 0.25f, 0.25f);
+						effect.AmbientLightColor = new Vector3(0.6f, 0.6f, 0.6f);
 						effect.DirectionalLight0.Direction = new Vector3(0f, -1f, 0f);
 					}
 
@@ -127,7 +131,48 @@ namespace UntitledSandbox
 						mesh.Draw();
 				}
 			}
+
 			base.Draw(gameTime);
+		}
+
+		void DrawSkybox()
+		{
+			Model skyboxModel = this.ContentManager.GetModel("models/skybox2");
+			Texture2D[] skyboxTextures = new Texture2D[skyboxModel.Meshes.Count];
+			int i = 0;
+			foreach (ModelMesh mesh in skyboxModel.Meshes)
+				foreach (BasicEffect currentEffect in mesh.Effects)
+					skyboxTextures[i++] = currentEffect.Texture;
+
+			SamplerState ss = new SamplerState();
+			ss.AddressU = TextureAddressMode.Clamp;
+			ss.AddressV = TextureAddressMode.Clamp;
+			GraphicsDevice.SamplerStates[0] = ss;
+
+			DepthStencilState dss = new DepthStencilState();
+			dss.DepthBufferEnable = false;
+			GraphicsDevice.DepthStencilState = dss;
+
+			Matrix[] skyboxTransforms = new Matrix[skyboxModel.Bones.Count];
+			skyboxModel.CopyAbsoluteBoneTransformsTo(skyboxTransforms);
+			i = 0;
+			foreach (ModelMesh mesh in skyboxModel.Meshes)
+			{
+				foreach (BasicEffect effect in mesh.Effects)
+				{
+					Matrix worldMatrix = skyboxTransforms[mesh.ParentBone.Index] 
+						* Matrix.CreateTranslation(this.Player.Camera.Position);
+					effect.World = worldMatrix;
+					effect.View = this.Player.Camera.ViewMatrix;
+					effect.Projection = this.Player.Camera.ProjectionMatrix;
+					effect.Texture = skyboxTextures[i++];
+				}
+				mesh.Draw();
+			}
+
+			dss = new DepthStencilState();
+			dss.DepthBufferEnable = true;
+			GraphicsDevice.DepthStencilState = dss;
 		}
 
 		void Window_ClientSizeChanged(object sender, EventArgs e)

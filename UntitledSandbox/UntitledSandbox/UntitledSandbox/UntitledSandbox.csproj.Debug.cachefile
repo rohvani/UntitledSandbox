@@ -1,3 +1,16 @@
 Content\models\cube.xnb
 Content\fonts\default.xnb
 Content\models\terrain_0.xnb
+Content\models\skybox2.xnb
+Content\models\skybox_back.xnb
+Content\models\skybox_bottom.xnb
+Content\models\skybox_front.xnb
+Content\models\skybox_left.xnb
+Content\models\skybox_right.xnb
+Content\models\skybox_top.xnb
+Content\models\SkyBox_Top_0.xnb
+Content\models\SkyBox_Right_0.xnb
+Content\models\SkyBox_Left_0.xnb
+Content\models\SkyBox_Front_0.xnb
+Content\models\SkyBox_Back_0.xnb
+Content\models\SkyBox_Bottom_0.xnb
