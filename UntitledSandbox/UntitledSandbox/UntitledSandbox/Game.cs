@@ -30,6 +30,7 @@ namespace UntitledSandbox
 
 			this.CModels = new List<CModel>();
 			this.Graphics = new GraphicsDeviceManager(this);
+			this.Graphics.PreferMultiSampling = true;
 
 			Content.RootDirectory = "Content";
 		}
