@@ -22,7 +22,6 @@ namespace UntitledSandbox
 		public Player Player { get; set; }
 
 		private List<CModel> CModels { get; set; }
-		private Effect SkySphereEffect { get; set; }
 
 		public const int MAP_SIZE = 50 * 2;
 		public Game()
@@ -62,11 +61,12 @@ namespace UntitledSandbox
 
 		protected override void LoadContent()
 		{
+
 			// [ContentLogic] Load 3D Content
 			Model cubeModel = ContentManager.Load<Model>("models/cube");
 			Model skySphere = ContentManager.Load<Model>("models/SphereHighPoly");
-			TextureCube skyboxTexture = Content.Load<TextureCube>("textures/uffizi_cross");
-			this.SkySphereEffect = Content.Load<Effect>("effects/SkySphere");
+			TextureCube skyboxTexture = ContentManager.Load<TextureCube>("textures/uffizi_cross");
+			Effect skySphereEffect = ContentManager.Load<Effect>("effects/SkySphere");
 
 			// [WorldLogic] Create a 5x5 map of cubes
 			for (int x = -MAP_SIZE; x < MAP_SIZE; x += 2)
@@ -77,17 +77,16 @@ namespace UntitledSandbox
 				}
 			}
 
-
 			// Set the parameters of the effect
-			this.SkySphereEffect.Parameters["ViewMatrix"].SetValue(this.Player.Camera.ViewMatrix);
-			this.SkySphereEffect.Parameters["ProjectionMatrix"].SetValue(this.Player.Camera.ProjectionMatrix);
-			this.SkySphereEffect.Parameters["SkyboxTexture"].SetValue(skyboxTexture);
+			skySphereEffect.Parameters["ViewMatrix"].SetValue(this.Player.Camera.ViewMatrix);
+			skySphereEffect.Parameters["ProjectionMatrix"].SetValue(this.Player.Camera.ProjectionMatrix);
+			skySphereEffect.Parameters["SkyboxTexture"].SetValue(skyboxTexture);
 
 			foreach (ModelMesh mesh in skySphere.Meshes)
 			{
 				foreach (ModelMeshPart part in mesh.MeshParts)
 				{
-					part.Effect = this.SkySphereEffect;
+					part.Effect = skySphereEffect;
 				}
 			}
 		}
@@ -158,10 +157,11 @@ namespace UntitledSandbox
 		protected void DrawSkySphere()
 		{
 			Model skySphere = this.ContentManager.Get<Model>("models/SphereHighPoly");
+			Effect skySphereEffect = this.ContentManager.Get<Effect>("effects/SkySphere");
 
 			// Set the View and Projection matrix for the effect
-			this.SkySphereEffect.Parameters["ViewMatrix"].SetValue(this.Player.Camera.ViewMatrix);
-			this.SkySphereEffect.Parameters["ProjectionMatrix"].SetValue(this.Player.Camera.ProjectionMatrix);
+			skySphereEffect.Parameters["ViewMatrix"].SetValue(this.Player.Camera.ViewMatrix);
+			skySphereEffect.Parameters["ProjectionMatrix"].SetValue(this.Player.Camera.ProjectionMatrix);
 
 			// Draw the sphere model that the effect projects onto
 			foreach (ModelMesh mesh in skySphere.Meshes)
