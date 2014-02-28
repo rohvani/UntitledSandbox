@@ -63,8 +63,8 @@ namespace UntitledSandbox
 		protected override void LoadContent()
 		{
 			// [ContentLogic] Load 3D Content
-			Model cubeModel = ContentManager.LoadModel("models/cube");
-			Model skySphere = ContentManager.LoadModel("models/SphereHighPoly");
+			Model cubeModel = ContentManager.Load<Model>("models/cube");
+			Model skySphere = ContentManager.Load<Model>("models/SphereHighPoly");
 			TextureCube skyboxTexture = Content.Load<TextureCube>("textures/uffizi_cross");
 			this.SkySphereEffect = Content.Load<Effect>("effects/SkySphere");
 
@@ -157,7 +157,7 @@ namespace UntitledSandbox
 
 		protected void DrawSkySphere()
 		{
-			Model skySphere = this.ContentManager.GetModel("models/SphereHighPoly");
+			Model skySphere = this.ContentManager.Get<Model>("models/SphereHighPoly");
 
 			// Set the View and Projection matrix for the effect
 			this.SkySphereEffect.Parameters["ViewMatrix"].SetValue(this.Player.Camera.ViewMatrix);

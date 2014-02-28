@@ -7,38 +7,33 @@ namespace UntitledSandbox.Managers
 {
 	public class ContentManager
 	{
-		private List<Model> Models { get; set; }
+		private Dictionary<Type, dynamic> Managers { get; set; }
 
 		public ContentManager()
 		{
-			this.Models = new List<Model>();
+			this.Managers = new Dictionary<Type, dynamic>();
 		}
 
-		public Model LoadModel(string filePath)
+		public T Load<T>(string filePath) where T : class
 		{
-			try
-			{
-				Model model = Game.Instance.Content.Load<Model>(filePath);
-				if (model != null) this.Models.Add(model);
-				return model;
-			}
-			catch
-			{
-				Console.WriteLine("[ContentManager] Error loading '{0}'", filePath);
-				return null;
-			}
+			return this.GetManager<T>().Load(filePath);
 		}
 
-		public Model GetModel(string filePath)
+		public T Get<T>(string filePath) where T : class
 		{
-			try
+			return this.GetManager<T>().Get(filePath);
+		}
+
+		public ContentTypeManager<T> GetManager<T>() where T : class
+		{
+			Type type = typeof(T);
+			dynamic manager;
+			if (!this.Managers.TryGetValue(type, out manager))
 			{
-				return this.Models.First(p => p.Tag.Equals(filePath));
+				manager = new ContentTypeManager<T>();
+				this.Managers.Add(type, manager);
 			}
-			catch
-			{
-				return LoadModel(filePath);
-			}
+			return manager;
 		}
 	}
 }
