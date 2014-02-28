@@ -22,8 +22,9 @@ namespace UntitledSandbox
 		public Player Player { get; set; }
 
 		private List<CModel> CModels { get; set; }
+		private Effect SkySphereEffect { get; set; }
 
-		public static const int MAP_SIZE = 50 * 2;
+		public const int MAP_SIZE = 50 * 2;
 		public Game()
 		{
 			Instance = this;
@@ -62,14 +63,31 @@ namespace UntitledSandbox
 		protected override void LoadContent()
 		{
 			// [ContentLogic] Load 3D Content
-			Model cubeModel = ContentManager.GetModel("models/cube"); // String literals for constants leave a bad taste in my mouth
-			
+			Model cubeModel = ContentManager.LoadModel("models/cube");
+			Model skySphere = ContentManager.LoadModel("models/SphereHighPoly");
+			TextureCube skyboxTexture = Content.Load<TextureCube>("textures/uffizi_cross");
+			this.SkySphereEffect = Content.Load<Effect>("effects/SkySphere");
+
 			// [WorldLogic] Create a 5x5 map of cubes
 			for (int x = -MAP_SIZE; x < MAP_SIZE; x += 2)
 			{
 				for (int z = -MAP_SIZE; z < MAP_SIZE; z += 2)
 				{
-					CModels.Add(new CModel(cubeModel, new Vector3(x, -5, z)));
+					this.CModels.Add(new CModel(cubeModel, new Vector3(x, -5, z)));
+				}
+			}
+
+
+			// Set the parameters of the effect
+			this.SkySphereEffect.Parameters["ViewMatrix"].SetValue(this.Player.Camera.ViewMatrix);
+			this.SkySphereEffect.Parameters["ProjectionMatrix"].SetValue(this.Player.Camera.ProjectionMatrix);
+			this.SkySphereEffect.Parameters["SkyboxTexture"].SetValue(skyboxTexture);
+
+			foreach (ModelMesh mesh in skySphere.Meshes)
+			{
+				foreach (ModelMeshPart part in mesh.MeshParts)
+				{
+					part.Effect = this.SkySphereEffect;
 				}
 			}
 		}
@@ -94,9 +112,11 @@ namespace UntitledSandbox
 
 		protected override void Draw(GameTime gameTime)
 		{
-			GraphicsDevice.Clear(Color.Transparent);
+			this.GraphicsDevice.Clear(Color.Transparent);
 
-			this.DrawSkybox();
+			this.DrawSkySphere();
+			//this.DrawSkybox();
+
 			this.GraphicsDevice.SamplerStates[0] = SamplerState.PointClamp;
 			
 			Matrix world;
@@ -135,44 +155,23 @@ namespace UntitledSandbox
 			base.Draw(gameTime);
 		}
 
-		void DrawSkybox()
+		protected void DrawSkySphere()
 		{
-			Model skyboxModel = this.ContentManager.GetModel("models/skybox2");
-			Texture2D[] skyboxTextures = new Texture2D[skyboxModel.Meshes.Count];
-			int i = 0;
-			foreach (ModelMesh mesh in skyboxModel.Meshes)
-				foreach (BasicEffect currentEffect in mesh.Effects)
-					skyboxTextures[i++] = currentEffect.Texture;
+			Model skySphere = this.ContentManager.GetModel("models/SphereHighPoly");
 
-			SamplerState ss = new SamplerState();
-			ss.AddressU = TextureAddressMode.Clamp;
-			ss.AddressV = TextureAddressMode.Clamp;
-			GraphicsDevice.SamplerStates[0] = ss;
+			// Set the View and Projection matrix for the effect
+			this.SkySphereEffect.Parameters["ViewMatrix"].SetValue(this.Player.Camera.ViewMatrix);
+			this.SkySphereEffect.Parameters["ProjectionMatrix"].SetValue(this.Player.Camera.ProjectionMatrix);
 
-			DepthStencilState dss = new DepthStencilState();
-			dss.DepthBufferEnable = false;
-			GraphicsDevice.DepthStencilState = dss;
-
-			Matrix[] skyboxTransforms = new Matrix[skyboxModel.Bones.Count];
-			skyboxModel.CopyAbsoluteBoneTransformsTo(skyboxTransforms);
-			i = 0;
-			foreach (ModelMesh mesh in skyboxModel.Meshes)
+			// Draw the sphere model that the effect projects onto
+			foreach (ModelMesh mesh in skySphere.Meshes)
 			{
-				foreach (BasicEffect effect in mesh.Effects)
-				{
-					Matrix worldMatrix = skyboxTransforms[mesh.ParentBone.Index] 
-						* Matrix.CreateTranslation(this.Player.Camera.Position);
-					effect.World = worldMatrix;
-					effect.View = this.Player.Camera.ViewMatrix;
-					effect.Projection = this.Player.Camera.ProjectionMatrix;
-					effect.Texture = skyboxTextures[i++];
-				}
 				mesh.Draw();
 			}
 
-			dss = new DepthStencilState();
-			dss.DepthBufferEnable = true;
-			GraphicsDevice.DepthStencilState = dss;
+			// Undo the renderstate settings from the shader
+			this.GraphicsDevice.RasterizerState = RasterizerState.CullCounterClockwise;
+			this.GraphicsDevice.DepthStencilState = DepthStencilState.Default;
 		}
 
 		void Window_ClientSizeChanged(object sender, EventArgs e)
