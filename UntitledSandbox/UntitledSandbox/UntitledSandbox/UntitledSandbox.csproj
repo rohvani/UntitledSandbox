@@ -109,6 +109,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Common\CModel.cs" />
+    <Compile Include="Terrain\Renderers\BlockTerrainRenderer.cs" />
+    <Compile Include="Terrain\HeightMap.cs" />
+    <Compile Include="Terrain\PerlinGenerator.cs" />
     <Compile Include="Managers\ContentManager.cs" />
     <Compile Include="Managers\ContentTypeManager.cs" />
     <Compile Include="Managers\UIManager.cs" />
@@ -118,6 +121,9 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Game.cs" />
+    <Compile Include="Terrain\Renderers\SkySphereRenderer.cs" />
+    <Compile Include="Terrain\Renderers\NoiseTerrainRenderer.cs" />
+    <Compile Include="Terrain\Renderer.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Game.ico" />

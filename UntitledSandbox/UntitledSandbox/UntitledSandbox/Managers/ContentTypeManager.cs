@@ -31,9 +31,10 @@ namespace UntitledSandbox.Managers
 				Console.WriteLine("[ContentManager] Loaded new resource '{0}'", filePath);
 				return resource;
 			}
-			catch
+			catch (Exception e)
 			{
 				Console.WriteLine("[ContentManager] Error loading resource '{0}'", filePath);
+				Console.Write(e);
 				return default(T);
 			}
 		}
