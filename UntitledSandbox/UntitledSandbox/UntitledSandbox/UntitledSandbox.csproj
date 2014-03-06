@@ -109,6 +109,10 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Common\CModel.cs" />
+    <Compile Include="Common\UI\UIButton.cs" />
+    <Compile Include="Common\UI\UIComponent.cs" />
+    <Compile Include="Common\UI\UILabel.cs" />
+    <Compile Include="Common\UI\UIPanel.cs" />
     <Compile Include="Terrain\Renderers\BlockTerrainRenderer.cs" />
     <Compile Include="Terrain\HeightMap.cs" />
     <Compile Include="Terrain\PerlinGenerator.cs" />
@@ -162,9 +166,7 @@
       <Install>true</Install>
     </BootstrapperPackage>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Common\UI\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\XNA Game Studio\Microsoft.Xna.GameStudio.targets" />
   <!--

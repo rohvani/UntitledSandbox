@@ -39,6 +39,8 @@ namespace UntitledSandbox.PlayerData
 
 					if (oldKeyboardState.IsKeyUp(Keys.F1) && ks.IsKeyDown(Keys.F1))
 						Player.MouseLook = !Player.MouseLook;
+					if (oldKeyboardState.IsKeyUp(Keys.F2) && ks.IsKeyDown(Keys.F2))
+						Game.Instance.UIManager.registerUIComponent(new Common.UI.UIPanel(new Vector2(100, 100), new Vector2(600, 200)));
 
 					this.moveVector = new Vector3(0, 0, 0);
 
