@@ -38,6 +38,7 @@ namespace UntitledSandbox.Managers
 				{
 					window.handleClick(clickPosition);
 					activeWindow = window;
+					break;
 				}
 			}
 
