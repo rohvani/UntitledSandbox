@@ -23,7 +23,7 @@ namespace UntitledSandbox.PlayerData
 
 			if (Game.Instance.IsActive)
 			{
-				if (mouseState != this.Player.MouseState && Player.MouseLook)
+				if (Player.MouseLook)
 				{
 					float xDifference = mouseState.X - this.Player.MouseState.X;
 					float yDifference = mouseState.Y - this.Player.MouseState.Y;
@@ -33,35 +33,45 @@ namespace UntitledSandbox.PlayerData
 					Game.CenterMouse();
 				}
 
+				if (!Player.MouseLook && mouseState.LeftButton == ButtonState.Pressed && Player.MouseState.LeftButton == ButtonState.Released)
+					Game.Instance.UIManager.handleClick(new Vector2(mouseState.X, mouseState.Y));
+
 				if (keyboardChanged)
 				{
-					KeyboardState ks = this.Player.KeyboardState;
+					KeyboardState keyboardState = this.Player.KeyboardState;
 
-					if (oldKeyboardState.IsKeyUp(Keys.F1) && ks.IsKeyDown(Keys.F1))
+					if (oldKeyboardState.IsKeyUp(Keys.F1) && keyboardState.IsKeyDown(Keys.F1))
+					{
+						Game.Instance.IsMouseVisible = !Game.Instance.IsMouseVisible;
 						Player.MouseLook = !Player.MouseLook;
-					if (oldKeyboardState.IsKeyUp(Keys.F2) && ks.IsKeyDown(Keys.F2))
+					}
+
+					if (oldKeyboardState.IsKeyUp(Keys.F2) && keyboardState.IsKeyDown(Keys.F2))
 						Game.Instance.UIManager.registerUIComponent(new Common.UI.UIPanel(new Vector2(100, 100), new Vector2(600, 200)));
-					if (oldKeyboardState.IsKeyUp(Keys.F3) && ks.IsKeyDown(Keys.F3))
+
+					if (oldKeyboardState.IsKeyUp(Keys.F3) && keyboardState.IsKeyDown(Keys.F3))
 						Game.Instance.UIManager.registerUIComponent(new Common.UI.UIPanel(new Vector2(150, 90), new Vector2(600, 200)));
 
 					this.moveVector = new Vector3(0, 0, 0);
 
-					if (ks.IsKeyDown(Keys.Up) || ks.IsKeyDown(Keys.W))
+					if (keyboardState.IsKeyDown(Keys.Up) || keyboardState.IsKeyDown(Keys.W))
 						this.moveVector.Z -= 1;
-					if (ks.IsKeyDown(Keys.Down) || ks.IsKeyDown(Keys.S))
+					if (keyboardState.IsKeyDown(Keys.Down) || keyboardState.IsKeyDown(Keys.S))
 						this.moveVector.Z += 1;
-					if (ks.IsKeyDown(Keys.Right) || ks.IsKeyDown(Keys.D))
+					if (keyboardState.IsKeyDown(Keys.Right) || keyboardState.IsKeyDown(Keys.D))
 						this.moveVector.X += 1;
-					if (ks.IsKeyDown(Keys.Left) || ks.IsKeyDown(Keys.A))
+					if (keyboardState.IsKeyDown(Keys.Left) || keyboardState.IsKeyDown(Keys.A))
 						this.moveVector.X -= 1;
-					if (ks.IsKeyDown(Keys.Q))
+					if (keyboardState.IsKeyDown(Keys.Q))
 						this.moveVector.Y += 1;
-					if (ks.IsKeyDown(Keys.Z))
+					if (keyboardState.IsKeyDown(Keys.Z))
 						this.moveVector.Y -= 1;
 				}
 
 				this.Player.Camera.AddToCameraPosition(this.moveVector * amount);
 			}
+
+			Player.UpdateMouseState(false);
 		}
 	}
 }

@@ -2,13 +2,12 @@
 
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using System;
 
 namespace UntitledSandbox.Common.UI
 {
 	public class UIPanel : UIComponent
 	{
-		public string name;
-
 		public UIPanel(Vector2 position, Vector2 size, string name)
 		{
 			this.position = position;
@@ -24,12 +23,23 @@ namespace UntitledSandbox.Common.UI
 		{
 		}
 
+		public override void handleClick(Vector2 clickPosition)
+		{
+			foreach (UIComponent child in children)
+			{
+				if (child.containsClick(clickPosition))
+				{
+					child.handleClick(clickPosition); // Should add some form of action parameter to buttons that can determine what the button does...  perhaps add scripting?
+					if (child.name == "exit") Game.Instance.UIManager.unregisterUIComponent(this); // for now, we're going to check the name of a button to determine if it's the exit button...					
+					break;
+				}
+			}
+		}
+
 		public override void Draw()
 		{
-			Vector2 temp = position;
-
 			Rectangle background = new Rectangle((int)position.X, (int)position.Y, (int)size.X, (int)size.Y);
-			Rectangle titlebar = new Rectangle((int)position.X, (int)position.Y, (int)size.X, 16); // titlebar is 16 pixels tall
+			Rectangle titlebar = new Rectangle((int)position.X, (int)position.Y, (int)size.X, 16); // titlebar is 16 pixels tall, 'magic number', perhaps move 16 to a static in UIManager incase we add in UI scaling or something
 
 			Rectangle borderleft = new Rectangle((int)position.X, (int)position.Y, 1, (int) size.Y);
 			Rectangle borderright = new Rectangle((int)(position.X + size.X), (int)position.Y, 1, (int)size.Y);
@@ -41,7 +51,7 @@ namespace UntitledSandbox.Common.UI
 			Game.Instance.SpriteBatch.Draw(Game.Instance.ContentManager.Get<Texture2D>("textures/ui/windowForeground"), borderright, Color.White);
 			Game.Instance.SpriteBatch.Draw(Game.Instance.ContentManager.Get<Texture2D>("textures/ui/windowForeground"), borderbottom, Color.White);
 
-			// render panel name in the center of title bar
+			// [Todo] render panel name/title in the center of title bar
 		}
 	}
 }

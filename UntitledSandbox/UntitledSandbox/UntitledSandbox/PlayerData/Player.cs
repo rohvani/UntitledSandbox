@@ -37,9 +37,9 @@ namespace UntitledSandbox.PlayerData
 			return changed;
 		}
 
-		public void UpdateMouseState()
+		public void UpdateMouseState(bool centerMouse = true)
 		{
-			Game.CenterMouse();
+			if(centerMouse) Game.CenterMouse();
 			this.MouseState = Mouse.GetState();
 		}
 	}

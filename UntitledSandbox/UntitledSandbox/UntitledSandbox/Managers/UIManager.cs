@@ -28,6 +28,11 @@ namespace UntitledSandbox.Managers
 			activeWindows.Insert(0, component);
 		}
 
+		public void unregisterUIComponent(UIComponent component)
+		{
+			activeWindows.Remove(component);
+		}
+
 		public void handleClick(Vector2 clickPosition)
 		{
 			UIComponent activeWindow = null;
