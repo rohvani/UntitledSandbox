@@ -3,9 +3,9 @@ Content\fonts\default.xnb
 Content\models\terrain_0.xnb
 Content\models\SphereHighPoly.xnb
 Content\textures\uffizi_cross.xnb
+Content\effects\SkySphere.xnb
 Content\textures\heightmap.xnb
+Content\effects\terrain.xnb
 Content\textures\grass.xnb
 Content\textures\ui\windowBackground.xnb
 Content\textures\ui\windowForeground.xnb
-Content\effects\SkySphere.xnb
-Content\effects\terrain.xnb

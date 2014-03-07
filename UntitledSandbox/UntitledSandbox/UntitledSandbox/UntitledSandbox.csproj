@@ -109,10 +109,10 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Common\CModel.cs" />
-    <Compile Include="Common\UI\UIButton.cs" />
-    <Compile Include="Common\UI\UIComponent.cs" />
-    <Compile Include="Common\UI\UILabel.cs" />
-    <Compile Include="Common\UI\UIPanel.cs" />
+    <Compile Include="Common\UI\Button.cs" />
+    <Compile Include="Common\UI\Component.cs" />
+    <Compile Include="Common\UI\Label.cs" />
+    <Compile Include="Common\UI\Panel.cs" />
     <Compile Include="Terrain\Renderers\BlockTerrainRenderer.cs" />
     <Compile Include="Terrain\HeightMap.cs" />
     <Compile Include="Terrain\PerlinGenerator.cs" />

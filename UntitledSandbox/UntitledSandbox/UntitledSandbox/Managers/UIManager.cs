@@ -11,37 +11,35 @@ namespace UntitledSandbox.Managers
 {
 	public class UIManager
 	{
-		public List<UIComponent> activeWindows;
+		private static List<Component> activeWindows = new List<Component>();
 
-		public UIManager()
+		public static void DrawWindows()
 		{
-			activeWindows = new List<UIComponent>();
+			for (int i = activeWindows.Count - 1; i >= 0; i--)
+			{
+				activeWindows[i].Draw();
+			}
 		}
 
-		public void drawWindows()
-		{
-			for (int i = activeWindows.Count - 1; i >= 0; i--) activeWindows[i].Draw();
-		}
-
-		public void registerUIComponent(UIComponent component)
+		public static void RegisterComponent(Component component)
 		{
 			activeWindows.Insert(0, component);
 		}
 
-		public void unregisterUIComponent(UIComponent component)
+		public static void UnregisterComponent(Component component)
 		{
 			activeWindows.Remove(component);
 		}
 
-		public void handleClick(Vector2 clickPosition)
+		public static void HandleClick(Vector2 clickPosition)
 		{
-			UIComponent activeWindow = null;
+			Component activeWindow = null;
 
-			foreach (UIComponent window in activeWindows)
+			foreach (Component window in activeWindows)
 			{
-				if (window.containsClick(clickPosition))
+				if (window.Contains(clickPosition))
 				{
-					window.handleClick(clickPosition);
+					window.HandleClick(clickPosition);
 					activeWindow = window;
 					break;
 				}

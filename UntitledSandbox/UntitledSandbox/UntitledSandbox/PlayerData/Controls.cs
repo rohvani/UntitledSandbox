@@ -1,5 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
+using UntitledSandbox.Common.UI;
+using UntitledSandbox.Managers;
 
 namespace UntitledSandbox.PlayerData
 {
@@ -34,7 +36,7 @@ namespace UntitledSandbox.PlayerData
 				}
 
 				if (!Player.MouseLook && mouseState.LeftButton == ButtonState.Pressed && Player.MouseState.LeftButton == ButtonState.Released)
-					Game.Instance.UIManager.handleClick(new Vector2(mouseState.X, mouseState.Y));
+					UIManager.HandleClick(new Vector2(mouseState.X, mouseState.Y));
 
 				if (keyboardChanged)
 				{
@@ -47,10 +49,10 @@ namespace UntitledSandbox.PlayerData
 					}
 
 					if (oldKeyboardState.IsKeyUp(Keys.F2) && keyboardState.IsKeyDown(Keys.F2))
-						Game.Instance.UIManager.registerUIComponent(new Common.UI.UIPanel(new Vector2(100, 100), new Vector2(600, 200)));
+						UIManager.RegisterComponent(new Panel(new Vector2(100, 100), new Vector2(600, 200)));
 
 					if (oldKeyboardState.IsKeyUp(Keys.F3) && keyboardState.IsKeyDown(Keys.F3))
-						Game.Instance.UIManager.registerUIComponent(new Common.UI.UIPanel(new Vector2(150, 90), new Vector2(600, 200)));
+						UIManager.RegisterComponent(new Panel(new Vector2(150, 90), new Vector2(600, 200)));
 
 					this.moveVector = new Vector3(0, 0, 0);
 

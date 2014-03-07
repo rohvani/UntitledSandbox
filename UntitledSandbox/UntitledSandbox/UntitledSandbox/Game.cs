@@ -18,7 +18,6 @@ namespace UntitledSandbox
 
 		public SpriteBatch SpriteBatch { get; private set; }
 		public ContentManager ContentManager { get; private set; }
-		public UIManager UIManager { get; private set; }
 
 		public GraphicsDeviceManager Graphics { get; set; }
 		public Player Player { get; set; }
@@ -51,7 +50,6 @@ namespace UntitledSandbox
 
 			// [StartupLogic] Initialize Managers
 			this.ContentManager = new ContentManager();
-			this.UIManager = new UIManager();
 
 			// [StartupLogic] Graphic Devices & Settings
 			this.SpriteBatch = new SpriteBatch(this.GraphicsDevice);
@@ -100,7 +98,7 @@ namespace UntitledSandbox
 			this.TerrainRenderer.Draw();
 
 			SpriteBatch.Begin();
-			UIManager.drawWindows();
+			UIManager.DrawWindows();
 			SpriteBatch.End();
 
 			base.Draw(gameTime);
