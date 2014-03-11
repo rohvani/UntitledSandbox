@@ -9,13 +9,11 @@ namespace UntitledSandbox.Managers
 {
 	public class ContentTypeManager<T> where T : class
 	{
-		public List<T> Resources { get; set; }
+		private List<Asset> Assets { get; set; }
 
 		public ContentTypeManager()
 		{
-			if (!typeof(T).IsSubclassOf(typeof(GraphicsResource)) && !typeof(T).Equals(typeof(Model)))
-				throw new Exception("ContentTypeManager created with illegal type parameter");
-			this.Resources = new List<T>();
+			this.Assets = new List<Asset>();
 		}
 
 		public T Load(string filePath)
@@ -25,8 +23,8 @@ namespace UntitledSandbox.Managers
 				T resource = Game.Instance.Content.Load<T>(filePath);
 				if (resource != null)
 				{
-					this.SetTag(resource, filePath);
-					this.Resources.Add(resource);
+					Asset asset = new Asset(filePath, resource);
+					this.Assets.Add(asset);
 				}
 				Console.WriteLine("[ContentManager] Loaded new resource '{0}'", filePath);
 				return resource;
@@ -43,7 +41,7 @@ namespace UntitledSandbox.Managers
 		{
 			try
 			{
-				return this.Resources.First<T>(p => GetTag(p).Equals(filePath));
+				return this.Assets.First<Asset>(p => p.Name.Equals(filePath)).Value;
 			}
 			catch
 			{
@@ -51,18 +49,16 @@ namespace UntitledSandbox.Managers
 			}
 		}
 
-		private object GetTag(object o)
+		private sealed class Asset
 		{
-			PropertyInfo tag = o.GetType().GetProperty("Tag");
-			if (tag != null) return tag.GetValue(o, null);
-			return null;
-		}
+			public string Name { get; private set; }
+			public T Value { get; private set; }
 
-		private void SetTag(object o, object value)
-		{
-			PropertyInfo tag = o.GetType().GetProperty("Tag");
-			if (tag != null) tag.SetValue(o, value, null);
+			public Asset(string name, T value)
+			{
+				this.Name = name;
+				this.Value = value;
+			}
 		}
 	}
-
 }
