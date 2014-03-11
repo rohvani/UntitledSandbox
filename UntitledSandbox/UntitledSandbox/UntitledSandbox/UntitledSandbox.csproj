@@ -111,6 +111,7 @@
     <Compile Include="Common\CModel.cs" />
     <Compile Include="Common\UI\Button.cs" />
     <Compile Include="Common\UI\Component.cs" />
+    <Compile Include="Common\UI\Container.cs" />
     <Compile Include="Common\UI\Label.cs" />
     <Compile Include="Common\UI\Panel.cs" />
     <Compile Include="Terrain\Renderers\BlockTerrainRenderer.cs" />

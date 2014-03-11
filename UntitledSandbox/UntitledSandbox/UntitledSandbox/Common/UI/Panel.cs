@@ -7,11 +7,15 @@ using UntitledSandbox.Managers;
 
 namespace UntitledSandbox.Common.UI
 {
-	public class Panel : Component
+	public class Panel : Container
 	{
 		public Panel(Vector2 position, Vector2 size, string name="Window") : base(position, size, name)
 		{
 			// add Exit button via UIButton
+		}
+
+		public Panel() : this(Vector2.Zero, Vector2.Zero)
+		{
 		}
 
 		public override void Draw()
@@ -35,28 +39,6 @@ namespace UntitledSandbox.Common.UI
 		}
 
 		public override void Update()
-		{
-		}
-
-		public override void HandleClick(Vector2 clickPosition)
-		{
-			foreach (Component child in this.Children)
-			{
-				if (child.Contains(clickPosition))
-				{
-					child.HandleClick(clickPosition);
-					// Should add some form of action parameter to buttons that can determine what the button does...  perhaps add scripting?
-					// So that's what you meant. No, that's silly.
-					if (child.Name == "exit")
-						UIManager.UnregisterComponent(this); 
-					    // for now, we're going to check the name of a button to determine if it's the exit button...
-					    // That's normally how it's done.
-					break;
-				}
-			}
-		}
-
-		public override void HandleDrag()
 		{
 		}
 	}

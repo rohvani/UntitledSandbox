@@ -39,7 +39,7 @@ namespace UntitledSandbox.Managers
 			{
 				if (window.Contains(clickPosition))
 				{
-					window.HandleClick(clickPosition);
+					window.RaiseClickEvent(clickPosition);
 					activeWindow = window;
 					break;
 				}
