@@ -12,6 +12,7 @@ namespace UntitledSandbox.Common.UI
 		public Panel(Vector2 position, Vector2 size, string name="Window") : base(position, size, name)
 		{
 			// add Exit button via UIButton
+			this.Dragged += this.HandleDrag;
 		}
 
 		public Panel() : this(Vector2.Zero, Vector2.Zero)
@@ -40,6 +41,20 @@ namespace UntitledSandbox.Common.UI
 
 		public override void Update()
 		{
+
+		}
+
+		public void HandleDrag(object sender, DragEventArgs args)
+		{
+			if (args.From.X > this.Position.X && 
+				args.From.Y > this.Position.Y && 
+				args.From.X < this.Position.X + this.Size.X && 
+				args.From.Y < this.Position.Y + 16) // 16 = titlebar height
+			{
+				this.Position += (args.From - args.To);
+			}
+
+			
 		}
 	}
 }

@@ -25,6 +25,7 @@ namespace UntitledSandbox.Common.UI
 		}
 
 		public event EventHandler<ClickEventArgs> Clicked;
+		public event EventHandler<DragEventArgs> Dragged;
 
 		public string Name { get; set; }
 
@@ -52,11 +53,8 @@ namespace UntitledSandbox.Common.UI
 			// I'm pondering (pixel.X - this.Position.X) > 0 && < this.Size.X
 			if (pixel.X >= this.Position.X && pixel.X <= (this.Position.X + this.Size.X) &&
 				pixel.Y >= this.Position.Y && pixel.Y <= (this.Position.Y + this.Size.Y))
-			{
-				Console.WriteLine("[UIPanel] Detected click");
 				return true;
-			}
-			Console.WriteLine("[UIPanel] Not click");
+			
 			return false;
 		}
 
@@ -69,6 +67,16 @@ namespace UntitledSandbox.Common.UI
 		{
 			this.Clicked(sender, args);
 		}
+
+		public void RaiseDragEvent(Vector2 from, Vector2 to, object sender = null)
+		{
+			this.Dragged(sender, new DragEventArgs(from, to));
+		}
+
+		public void RaiseDragEvent(DragEventArgs args, object sender = null)
+		{
+			this.Dragged(sender, args);
+		}
 	}
 
 	public class ClickEventArgs : EventArgs
@@ -79,5 +87,17 @@ namespace UntitledSandbox.Common.UI
 		}
 
 		public Vector2 ClickLocation { get; private set; }
+	}
+
+	public class DragEventArgs : EventArgs
+	{
+		public DragEventArgs(Vector2 from, Vector2 to)
+		{
+			this.From = from;
+			this.To = to;
+		}
+
+		public Vector2 From { get; private set; }
+		public Vector2 To { get; private set; }
 	}
 }

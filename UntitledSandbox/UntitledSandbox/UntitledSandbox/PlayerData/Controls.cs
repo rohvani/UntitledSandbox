@@ -38,6 +38,9 @@ namespace UntitledSandbox.PlayerData
 				if (!Player.MouseLook && mouseState.LeftButton == ButtonState.Pressed && Player.MouseState.LeftButton == ButtonState.Released)
 					UIManager.HandleClick(new Vector2(mouseState.X, mouseState.Y));
 
+				if (!Player.MouseLook && mouseState.LeftButton == ButtonState.Pressed && Player.MouseState.LeftButton == ButtonState.Pressed)
+					UIManager.HandleDrag(new Vector2(mouseState.X, mouseState.Y), new Vector2(Player.MouseState.X, Player.MouseState.Y));
+
 				if (keyboardChanged)
 				{
 					KeyboardState keyboardState = this.Player.KeyboardState;

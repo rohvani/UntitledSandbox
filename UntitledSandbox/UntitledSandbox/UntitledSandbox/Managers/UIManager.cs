@@ -31,24 +31,51 @@ namespace UntitledSandbox.Managers
 			activeWindows.Remove(component);
 		}
 
-		public static void HandleClick(Vector2 clickPosition)
+		public static Component GetWindowAt(Vector2 location)
 		{
 			Component activeWindow = null;
 
 			foreach (Component window in activeWindows)
 			{
-				if (window.Contains(clickPosition))
+				if (window.Contains(location))
 				{
-					window.RaiseClickEvent(clickPosition);
 					activeWindow = window;
 					break;
 				}
 			}
 
-			if (activeWindow != null)
+			return activeWindow;
+		}
+
+		public static void FocusWindow(Component component)
+		{
+
+			if (component != null && activeWindows.Contains(component))
 			{
-				activeWindows.Remove(activeWindow);
-				activeWindows.Insert(0, activeWindow);
+				activeWindows.Remove(component);
+				activeWindows.Insert(0, component);
+			}
+		}
+
+		public static void HandleClick(Vector2 clickPosition)
+		{
+			Component window = GetWindowAt(clickPosition);
+
+			if (window != null)
+			{
+				window.RaiseClickEvent(clickPosition);
+				FocusWindow(window);
+			}
+		}
+
+		public static void HandleDrag(Vector2 from, Vector2 to)
+		{
+			Component window = GetWindowAt(from);
+
+			if (window != null)
+			{
+				FocusWindow(window);
+				window.RaiseDragEvent(from, to);		
 			}
 		}
 	}
