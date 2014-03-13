@@ -82,9 +82,7 @@ namespace UntitledSandbox.Managers
 
 		public static void CheckDragging(Vector2 from)
 		{
-			bool lol = GetWindowAt(from) != null;
-			Console.WriteLine("isDragging = {0}", lol);
-			if (lol) IsDragging = true;
+			if (GetWindowAt(from) != null) IsDragging = true;
 		}
 	}
 }

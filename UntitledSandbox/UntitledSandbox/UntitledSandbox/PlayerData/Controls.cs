@@ -19,7 +19,8 @@ namespace UntitledSandbox.PlayerData
 
 		public void ProcessInput(float amount)
 		{
-			MouseState mouseState = Mouse.GetState();
+			MouseState oldMouseState = Player.MouseState;
+			MouseState newMouseState = Mouse.GetState();
 
 			KeyboardState oldKeyboardState = this.Player.KeyboardState;
 			bool keyboardChanged = this.Player.UpdateKeyboardState();
@@ -28,8 +29,8 @@ namespace UntitledSandbox.PlayerData
 			{
 				if (Player.MouseLook)
 				{
-					float xDifference = mouseState.X - this.Player.MouseState.X;
-					float yDifference = mouseState.Y - this.Player.MouseState.Y;
+					float xDifference = newMouseState.X - oldMouseState.X;
+					float yDifference = newMouseState.Y - oldMouseState.Y;
 					this.Player.Camera.RotationYaw -= this.Player.Camera.RotationSpeed * xDifference * amount;
 					this.Player.Camera.RotationPitch -= this.Player.Camera.RotationSpeed * yDifference * amount;
 
@@ -37,31 +38,27 @@ namespace UntitledSandbox.PlayerData
 				}
 				else
 				{
-					if (Player.MouseState.LeftButton == ButtonState.Pressed && mouseState.LeftButton == ButtonState.Released)
+					if (oldMouseState.LeftButton == ButtonState.Pressed && newMouseState.LeftButton == ButtonState.Released)
 					{
-						UIManager.HandleClick(new Vector2(mouseState.X, mouseState.Y));
+						UIManager.HandleClick(new Vector2(newMouseState.X, newMouseState.Y));
 					}
-					if (Player.MouseState.LeftButton == ButtonState.Released && mouseState.LeftButton == ButtonState.Pressed)
+					if (oldMouseState.LeftButton == ButtonState.Released && newMouseState.LeftButton == ButtonState.Pressed)
 					{
-						UIManager.CheckDragging(new Vector2(Player.MouseState.X, Player.MouseState.Y));
-						UIManager.HandleDrag(new Vector2(mouseState.X, mouseState.Y), new Vector2(Player.MouseState.X, Player.MouseState.Y), true);
+						UIManager.CheckDragging(new Vector2(oldMouseState.X, oldMouseState.Y));
+						UIManager.HandleDrag(new Vector2(newMouseState.X, newMouseState.Y), new Vector2(oldMouseState.X, oldMouseState.Y), true);
 					}
 					else if (UIManager.IsDragging)
 					{
-						if (mouseState.LeftButton == ButtonState.Released)
+						if (newMouseState.LeftButton == ButtonState.Released)
 						{
-							Console.WriteLine("isDragging = false");
 							UIManager.IsDragging = false;
 						}
 
-						//if (Player.MouseState.X != mouseState.X || Player.MouseState.Y != mouseState.Y)
-						//{
-							UIManager.HandleDrag(new Vector2(mouseState.X, mouseState.Y), new Vector2(Player.MouseState.X, Player.MouseState.Y));
-					//	}
+						if (oldMouseState.X != newMouseState.X || oldMouseState.Y != newMouseState.Y)
+						{
+							UIManager.HandleDrag(new Vector2(newMouseState.X, newMouseState.Y), new Vector2(oldMouseState.X, Player.MouseState.Y));
+						}
 					}
-
-					//if (mouseState.LeftButton == ButtonState.Pressed && Player.MouseState.LeftButton == ButtonState.Pressed)
-						//UIManager.HandleDrag(new Vector2(mouseState.X, mouseState.Y), new Vector2(Player.MouseState.X, Player.MouseState.Y));
 				}
 
 				if (keyboardChanged)
@@ -78,7 +75,7 @@ namespace UntitledSandbox.PlayerData
 						UIManager.RegisterComponent(new Panel(new Vector2(100, 100), new Vector2(600, 200)));
 
 					if (oldKeyboardState.IsKeyUp(Keys.F3) && keyboardState.IsKeyDown(Keys.F3))
-						UIManager.RegisterComponent(new Panel(new Vector2(150, 90), new Vector2(600, 200)));
+						UIManager.RegisterComponent(new Panel(new Vector2(150, 90), new Vector2(200, 200)));
 
 					this.moveVector = new Vector3(0, 0, 0);
 

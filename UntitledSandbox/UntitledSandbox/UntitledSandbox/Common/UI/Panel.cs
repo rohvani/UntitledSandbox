@@ -36,6 +36,9 @@ namespace UntitledSandbox.Common.UI
 			this.SpriteBatch.Draw(windowForegroundTexture, borderRight, Color.White);
 			this.SpriteBatch.Draw(windowForegroundTexture, borderBottom, Color.White);
 
+			SpriteFont font = this.ContentManager.Get<SpriteFont>("fonts/default");
+			this.SpriteBatch.DrawString(font, this.Name, this.Position + new Vector2((this.Size.X / 2) - (font.MeasureString(Name).X / 2), 0), Color.White, 0, Vector2.Zero, new Vector2(0.6f, 0.6f), SpriteEffects.None, 0);
+
 			// [Todo] render panel name/title in the center of title bar
 		}
 
