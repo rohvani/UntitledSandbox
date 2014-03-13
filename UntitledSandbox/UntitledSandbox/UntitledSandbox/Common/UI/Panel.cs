@@ -49,7 +49,7 @@ namespace UntitledSandbox.Common.UI
 			if (args.From.X > this.Position.X && 
 				args.From.Y > this.Position.Y && 
 				args.From.X < this.Position.X + this.Size.X && 
-				args.From.Y < this.Position.Y + 16) // 16 = titlebar height
+				args.From.Y < this.Position.Y + 16 || UIManager.IsDragging) // 16 = titlebar height
 			{
 				this.Position += (args.From - args.To);
 			}

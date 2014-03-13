@@ -12,6 +12,7 @@ namespace UntitledSandbox.Managers
 	public class UIManager
 	{
 		private static List<Component> activeWindows = new List<Component>();
+		public static bool IsDragging = false;
 
 		public static void DrawWindows()
 		{
@@ -68,15 +69,22 @@ namespace UntitledSandbox.Managers
 			}
 		}
 
-		public static void HandleDrag(Vector2 from, Vector2 to)
+		public static void HandleDrag(Vector2 from, Vector2 to, bool firstDrag = false)
 		{
-			Component window = GetWindowAt(from);
+			Component window = firstDrag ? GetWindowAt(from) : activeWindows[0];
 
 			if (window != null)
 			{
 				FocusWindow(window);
 				window.RaiseDragEvent(from, to);		
 			}
+		}
+
+		public static void CheckDragging(Vector2 from)
+		{
+			bool lol = GetWindowAt(from) != null;
+			Console.WriteLine("isDragging = {0}", lol);
+			if (lol) IsDragging = true;
 		}
 	}
 }

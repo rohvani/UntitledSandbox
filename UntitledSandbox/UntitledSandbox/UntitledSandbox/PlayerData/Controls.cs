@@ -2,6 +2,7 @@
 using Microsoft.Xna.Framework.Input;
 using UntitledSandbox.Common.UI;
 using UntitledSandbox.Managers;
+using System;
 
 namespace UntitledSandbox.PlayerData
 {
@@ -34,12 +35,34 @@ namespace UntitledSandbox.PlayerData
 
 					Game.CenterMouse();
 				}
+				else
+				{
+					if (Player.MouseState.LeftButton == ButtonState.Pressed && mouseState.LeftButton == ButtonState.Released)
+					{
+						UIManager.HandleClick(new Vector2(mouseState.X, mouseState.Y));
+					}
+					if (Player.MouseState.LeftButton == ButtonState.Released && mouseState.LeftButton == ButtonState.Pressed)
+					{
+						UIManager.CheckDragging(new Vector2(Player.MouseState.X, Player.MouseState.Y));
+						UIManager.HandleDrag(new Vector2(mouseState.X, mouseState.Y), new Vector2(Player.MouseState.X, Player.MouseState.Y), true);
+					}
+					else if (UIManager.IsDragging)
+					{
+						if (mouseState.LeftButton == ButtonState.Released)
+						{
+							Console.WriteLine("isDragging = false");
+							UIManager.IsDragging = false;
+						}
 
-				if (!Player.MouseLook && mouseState.LeftButton == ButtonState.Pressed && Player.MouseState.LeftButton == ButtonState.Released)
-					UIManager.HandleClick(new Vector2(mouseState.X, mouseState.Y));
+						//if (Player.MouseState.X != mouseState.X || Player.MouseState.Y != mouseState.Y)
+						//{
+							UIManager.HandleDrag(new Vector2(mouseState.X, mouseState.Y), new Vector2(Player.MouseState.X, Player.MouseState.Y));
+					//	}
+					}
 
-				if (!Player.MouseLook && mouseState.LeftButton == ButtonState.Pressed && Player.MouseState.LeftButton == ButtonState.Pressed)
-					UIManager.HandleDrag(new Vector2(mouseState.X, mouseState.Y), new Vector2(Player.MouseState.X, Player.MouseState.Y));
+					//if (mouseState.LeftButton == ButtonState.Pressed && Player.MouseState.LeftButton == ButtonState.Pressed)
+						//UIManager.HandleDrag(new Vector2(mouseState.X, mouseState.Y), new Vector2(Player.MouseState.X, Player.MouseState.Y));
+				}
 
 				if (keyboardChanged)
 				{
