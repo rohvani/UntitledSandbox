@@ -28,18 +28,19 @@ namespace UntitledSandbox.Common.UI
 			Rectangle borderRight = new Rectangle((int)(Position.X + Size.X), (int)Position.Y, 1, (int)Size.Y);
 			Rectangle borderBottom = new Rectangle((int)Position.X, (int)(Position.Y + Size.Y), (int)Size.X + 1, 1);
 
-			this.SpriteBatch.Draw(this.ContentManager.Get<Texture2D>("textures/ui/windowBackground"), background, Color.White);
-			
-			Texture2D windowForegroundTexture = this.ContentManager.Get<Texture2D>("textures/ui/windowForeground");
-			this.SpriteBatch.Draw(windowForegroundTexture, titleBar, Color.White);
-			this.SpriteBatch.Draw(windowForegroundTexture, borderLeft, Color.White);
-			this.SpriteBatch.Draw(windowForegroundTexture, borderRight, Color.White);
-			this.SpriteBatch.Draw(windowForegroundTexture, borderBottom, Color.White);
+			Texture2D windowPixelTexture = this.ContentManager.Get<Texture2D>("textures/ui/windowPixel");
 
-			SpriteFont font = this.ContentManager.Get<SpriteFont>("fonts/default");
-			this.SpriteBatch.DrawString(font, this.Name, this.Position + new Vector2((this.Size.X / 2) - (font.MeasureString(Name).X / 2), 0), Color.White, 0, Vector2.Zero, new Vector2(0.6f, 0.6f), SpriteEffects.None, 0);
+			this.SpriteBatch.Draw(windowPixelTexture, background, Color.Gray);
 
-			// [Todo] render panel name/title in the center of title bar
+			this.SpriteBatch.Draw(windowPixelTexture, titleBar, Color.DarkGray);
+			this.SpriteBatch.Draw(windowPixelTexture, borderLeft, Color.DarkGray);
+			this.SpriteBatch.Draw(windowPixelTexture, borderRight, Color.DarkGray);
+			this.SpriteBatch.Draw(windowPixelTexture, borderBottom, Color.DarkGray);
+
+			SpriteFont font = this.ContentManager.Get<SpriteFont>("fonts/windowTitle");
+			this.SpriteBatch.DrawString(font, this.Name, this.Position + new Vector2(this.Size.X / 2, 0) - new Vector2(font.MeasureString(Name).X / 2, 0), Color.LightGray);
+
+			foreach (Component child in Children) child.Draw();
 		}
 
 		public override void Update()

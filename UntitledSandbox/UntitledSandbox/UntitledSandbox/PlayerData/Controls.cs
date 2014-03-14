@@ -72,10 +72,20 @@ namespace UntitledSandbox.PlayerData
 					}
 
 					if (oldKeyboardState.IsKeyUp(Keys.F2) && keyboardState.IsKeyDown(Keys.F2))
-						UIManager.RegisterComponent(new Panel(new Vector2(100, 100), new Vector2(600, 200)));
+					{
+						Panel panel = new Panel(new Vector2(100, 100), new Vector2(315, 200));
+						Label label = new Label("This is a label.  My parent's name is " + panel.Name, new Vector2(15, 25), panel);
+
+						UIManager.RegisterComponent(panel);
+					}
 
 					if (oldKeyboardState.IsKeyUp(Keys.F3) && keyboardState.IsKeyDown(Keys.F3))
-						UIManager.RegisterComponent(new Panel(new Vector2(150, 90), new Vector2(200, 200)));
+					{
+						Panel panel = new Panel(new Vector2(100, 100), new Vector2(200, 200));
+						Label label = new Label("This is a label.", new Vector2(15, 25), panel);
+
+						UIManager.RegisterComponent(panel);
+					}
 
 					this.moveVector = new Vector3(0, 0, 0);
 

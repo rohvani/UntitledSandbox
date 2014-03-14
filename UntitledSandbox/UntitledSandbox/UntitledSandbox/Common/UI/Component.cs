@@ -31,7 +31,7 @@ namespace UntitledSandbox.Common.UI
 
 		public Vector2 Position { get; set; }
 		public Vector2 Size { get; set; }
-		public Component Parent { get; protected set; }
+		public Container Parent { get; protected set; }
 
 		public Component(Vector2 position, Vector2 size, string name="Window")
 		{

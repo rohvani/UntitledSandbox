@@ -8,7 +8,7 @@ namespace UntitledSandbox.Common.UI
 {
 	public abstract class Container : Component
 	{
-		public List<Component> Children { get; protected set; }
+		public List<Component> Children { get; set; }
 
 		public Container(Vector2 position, Vector2 size, string name="Window") : base(position, size, name)
 		{

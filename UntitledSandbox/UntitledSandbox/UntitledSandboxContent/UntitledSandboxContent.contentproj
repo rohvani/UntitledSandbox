@@ -98,15 +98,17 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="textures\ui\windowBackground.png">
-      <Name>windowBackground</Name>
+    <Compile Include="textures\ui\windowPixel.png">
+      <Name>windowPixel</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
-    <Compile Include="textures\ui\windowForeground.png">
-      <Name>windowForeground</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="fonts\windowTitle.spritefont">
+      <Name>windowTitle</Name>
+      <Importer>FontDescriptionImporter</Importer>
+      <Processor>FontDescriptionProcessor</Processor>
     </Compile>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\XNA Game Studio\$(XnaFrameworkVersion)\Microsoft.Xna.GameStudio.ContentPipeline.targets" />
