@@ -10,6 +10,7 @@ using UntitledSandbox.Managers;
 using UntitledSandbox.Terrain;
 using UntitledSandbox.Terrain.Renderers;
 using UntitledSandbox.Common.UI;
+using UntitledSandbox.Terrain.Quad;
 
 namespace UntitledSandbox
 {
@@ -32,12 +33,6 @@ namespace UntitledSandbox
 
 			this.Graphics = new GraphicsDeviceManager(this);
 			this.Graphics.PreferMultiSampling = true;
-
-			this.SkyRenderer = new SkySphereRenderer();
-
-			// Something needs to be done about the scaling
-			this.TerrainRenderer = new NoiseTerrainRenderer();
-			//this.TerrainRenderer = new BlockTerrainRenderer();
 
 			Content.RootDirectory = "Content";
 		}
@@ -62,6 +57,13 @@ namespace UntitledSandbox
 			this.Player.Camera.ViewMatrix = Matrix.CreateLookAt(new Vector3(0, 0, -100), Vector3.Zero, Vector3.Up);
 			this.Player.Camera.ProjectionMatrix = Matrix.CreatePerspectiveFieldOfView(MathHelper.PiOver4, GraphicsDevice.Viewport.AspectRatio, 0.3f, 1000.0f);
 
+			this.SkyRenderer = new SkySphereRenderer();
+
+			// Something needs to be done about the scaling
+			this.TerrainRenderer = new QuadTreeRenderer(Vector3.Zero, 1);
+			//this.TerrainRenderer = new NoiseTerrainRenderer();
+			//this.TerrainRenderer = new BlockTerrainRenderer();
+
 			// [XNA]
 			base.Initialize();
 		}
@@ -85,7 +87,7 @@ namespace UntitledSandbox
 
 			// [GameLogic] Player Controls
 			this.Player.Controls.ProcessInput((float) gameTime.ElapsedGameTime.TotalMilliseconds / 1000.0f);
-			
+
 			// [GameLogic]
 			base.Update(gameTime);
 		}

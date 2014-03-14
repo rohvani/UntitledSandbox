@@ -16,6 +16,8 @@ namespace UntitledSandbox.PlayerData
 		public Matrix ProjectionMatrix { get; set; }
 		public BoundingFrustum Frustum { get; private set; }
 
+		public event EventHandler<EventArgs> CameraUpdated;
+
 		public Camera(Vector3 position, float cameraMoveSpeed)
 		{
 			this.Position = position;
@@ -30,6 +32,8 @@ namespace UntitledSandbox.PlayerData
 			this.ProjectionMatrix = new Matrix();
 
 			this.Frustum = new BoundingFrustum(this.ViewMatrix * this.ProjectionMatrix);
+			
+			//this.CameraUpdated
 		}
 
 		public Camera(Vector3 position) : this(position, 30.0F)
@@ -54,6 +58,8 @@ namespace UntitledSandbox.PlayerData
 			this.ViewMatrix = Matrix.CreateLookAt(this.Position, cameraFinalTarget, cameraRotatedUpVector);
 
 			this.Frustum.Matrix = (this.ViewMatrix * this.ProjectionMatrix);
+
+			if (this.CameraUpdated != null) this.CameraUpdated(this, new EventArgs());
 		}
 
 		public void AddToCameraPosition(Vector3 vectorToAdd)

@@ -34,7 +34,7 @@ namespace UntitledSandbox.Terrain.Renderers
 				}
 			}
 		}
-
+		
 		public override void Draw()
 		{
 			this.GraphicsDevice.SamplerStates[0] = SamplerState.PointClamp;

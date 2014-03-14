@@ -5,7 +5,7 @@ using System.Text;
 
 namespace UntitledSandbox.Terrain
 {
-	class HeightMap
+	public class HeightMap
 	{
 		public float[,] Heights { get; set; }
 		public int Size { get; set; }

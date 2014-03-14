@@ -8,6 +8,7 @@ namespace UntitledSandbox.PlayerData
 {
 	public class Controls
 	{
+		public static bool IsWire { get; private set; }
 		public Player Player { get; private set; }
 		private Vector3 moveVector;
 
@@ -64,6 +65,11 @@ namespace UntitledSandbox.PlayerData
 				if (keyboardChanged)
 				{
 					KeyboardState keyboardState = this.Player.KeyboardState;
+
+					if (oldKeyboardState.IsKeyUp(Keys.F5) && keyboardState.IsKeyDown(Keys.F5))
+					{
+						IsWire = !IsWire;
+					}
 
 					if (oldKeyboardState.IsKeyUp(Keys.F1) && keyboardState.IsKeyDown(Keys.F1))
 					{

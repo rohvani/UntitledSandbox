@@ -114,6 +114,11 @@
     <Compile Include="Common\UI\Container.cs" />
     <Compile Include="Common\UI\Label.cs" />
     <Compile Include="Common\UI\Panel.cs" />
+    <Compile Include="Terrain\BufferManager.cs" />
+    <Compile Include="Terrain\Quad\NodeType.cs" />
+    <Compile Include="Terrain\Quad\QuadNode.cs" />
+    <Compile Include="Terrain\Quad\QuadNodeVertex.cs" />
+    <Compile Include="Terrain\Quad\QuadTreeRenderer.cs" />
     <Compile Include="Terrain\Renderers\BlockTerrainRenderer.cs" />
     <Compile Include="Terrain\HeightMap.cs" />
     <Compile Include="Terrain\PerlinGenerator.cs" />
@@ -128,7 +133,8 @@
     <Compile Include="Game.cs" />
     <Compile Include="Terrain\Renderers\SkySphereRenderer.cs" />
     <Compile Include="Terrain\Renderers\NoiseTerrainRenderer.cs" />
-    <Compile Include="Terrain\Renderer.cs" />
+    <Compile Include="Terrain\Renderers\Renderer.cs" />
+    <Compile Include="Terrain\Quad\TreeVertexCollection.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Game.ico" />

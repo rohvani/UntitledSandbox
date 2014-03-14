@@ -22,6 +22,7 @@ namespace UntitledSandbox.Terrain.Renderers
 		{
 			get { return this.HeightMap.Size; }
 		}
+
 		private int TerrainLength
 		{
 			get { return this.HeightMap.Size; }
