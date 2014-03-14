@@ -1,12 +1,11 @@
 Content\models\cube.xnb
-Content\fonts\default.xnb
-Content\models\terrain_0.xnb
 Content\models\SphereHighPoly.xnb
+Content\fonts\default.xnb
+Content\fonts\windowTitle.xnb
 Content\textures\uffizi_cross.xnb
-Content\effects\SkySphere.xnb
 Content\textures\heightmap.xnb
 Content\textures\grass.xnb
-Content\effects\Series4Effects.xnb
-Content\fonts\windowTitle.xnb
 Content\textures\ui\windowPixel.xnb
-Content\textures\sphere.xnb
+Content\effects\SkySphere.xnb
+Content\effects\Series4Effects.xnb
+Content\models\terrain_0.xnb
