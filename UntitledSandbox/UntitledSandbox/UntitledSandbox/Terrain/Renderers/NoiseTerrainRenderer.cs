@@ -10,6 +10,8 @@ namespace UntitledSandbox.Terrain.Renderers
 {
 	public class NoiseTerrainRenderer : Renderer
 	{
+		public const string EFFECT = "effects/Series4Effects";
+		public const string TEXTURE = "textures/grass";
 		public const float AMBIENT_LIGHT = 0.4f;
 		public static Vector3 LIGHT_DIRECTION
 		{
@@ -37,11 +39,11 @@ namespace UntitledSandbox.Terrain.Renderers
 
 		public override void Load()
 		{
-			this.ContentManager.Load<Texture2D>("textures/grass");
-			this.ContentManager.Load<Effect>("effects/terrain");
+			this.ContentManager.Load<Texture2D>(TEXTURE);
+			this.ContentManager.Load<Effect>(EFFECT);
 
 			this.HeightMap = new HeightMap(512);
-			this.HeightMap.AddPerlinNoise(92.0f);
+			this.HeightMap.AddPerlinNoise(5.0f);
 			this.HeightMap.Perturb(32.0f, 32.0f);
 			for (int i = 0; i < 10; i++)
 				this.HeightMap.Erode(16.0f);
@@ -65,7 +67,6 @@ namespace UntitledSandbox.Terrain.Renderers
 			int[] terrainIndices = this.SetUpTerrainIndices();
 			terrainVertices = this.CalculateNormals(terrainVertices, terrainIndices);
 			this.CopyToTerrainBuffers(terrainVertices, terrainIndices);
-			//this.TerrainVertexDeclaration = new VertexDeclaration(Game.Instance.GraphicsDevice, null);
 		}
 
 		//private void LoadHeightData(Texture2D heightMap)
@@ -104,7 +105,7 @@ namespace UntitledSandbox.Terrain.Renderers
 			{
 				for (int y = 0; y < this.TerrainLength; y++)
 				{
-					terrainVertices[x + y * this.TerrainWidth].Position = new Vector3(x, this.HeightMap.Heights[x, y], -y);
+					terrainVertices[x + y * this.TerrainWidth].Position = new Vector3(x, this.HeightMap.Heights[x, y] * 20, -y);
 					terrainVertices[x + y * this.TerrainWidth].TextureCoordinate.X = (float) x / 30.0f;
 					terrainVertices[x + y * this.TerrainWidth].TextureCoordinate.Y = (float) y / 30.0f;
 				}
@@ -177,9 +178,13 @@ namespace UntitledSandbox.Terrain.Renderers
 
 		private void DrawTerrain()
 		{
-			Effect effect = this.ContentManager.Get<Effect>("effects/terrain");
+			//RasterizerState state = new RasterizerState();
+			//state.FillMode = FillMode.WireFrame;
+			//this.GraphicsDevice.RasterizerState = state;
+
+			Effect effect = this.ContentManager.Get<Effect>(EFFECT);
 			effect.CurrentTechnique = effect.Techniques["Textured"];
-			effect.Parameters["xTexture"].SetValue(this.ContentManager.Get<Texture2D>("textures/grass"));
+			effect.Parameters["xTexture"].SetValue(this.ContentManager.Get<Texture2D>(TEXTURE));
 
 			Matrix worldMatrix = Matrix.Identity;
 			effect.Parameters["xWorld"].SetValue(worldMatrix);

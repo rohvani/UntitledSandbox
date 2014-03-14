@@ -36,8 +36,8 @@ namespace UntitledSandbox
 			this.SkyRenderer = new SkySphereRenderer();
 
 			// Something needs to be done about the scaling
-			//this.TerrainRenderer = new NoiseTerrainRenderer();
-			this.TerrainRenderer = new BlockTerrainRenderer();
+			this.TerrainRenderer = new NoiseTerrainRenderer();
+			//this.TerrainRenderer = new BlockTerrainRenderer();
 
 			Content.RootDirectory = "Content";
 		}
