@@ -53,15 +53,15 @@ namespace UntitledSandbox
 			// [StartupLogic] Create Player & Update
 			Mouse.SetPosition(this.GraphicsDevice.Viewport.Width / 2, this.GraphicsDevice.Viewport.Height / 2);
 			this.Player = new Player();
+			this.Player.Camera.MoveSpeed /= 2;
 
 			this.Player.Camera.ViewMatrix = Matrix.CreateLookAt(new Vector3(0, 0, -100), Vector3.Zero, Vector3.Up);
 			this.Player.Camera.ProjectionMatrix = Matrix.CreatePerspectiveFieldOfView(MathHelper.PiOver4, GraphicsDevice.Viewport.AspectRatio, 0.3f, 1000.0f);
 
 			this.SkyRenderer = new SkySphereRenderer();
-
-			// Something needs to be done about the scaling
+			
 			this.TerrainRenderer = new QuadTreeRenderer(Vector3.Zero, 1);
-			//this.TerrainRenderer = new NoiseTerrainRenderer();
+			//this.TerrainRenderer = new NoiseTerrainRenderer(12);
 			//this.TerrainRenderer = new BlockTerrainRenderer();
 
 			// [XNA]

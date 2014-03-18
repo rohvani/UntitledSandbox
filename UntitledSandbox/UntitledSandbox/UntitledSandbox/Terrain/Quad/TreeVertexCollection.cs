@@ -61,7 +61,7 @@ namespace UntitledSandbox.Terrain.Quad
 
 				y = _position.Y + (heightMapColors[i].R / 5.0f);
 				var vert = new VertexPositionNormalTexture(new Vector3(x * _scale, y * _scale, z * _scale), Vector3.Zero, Vector2.Zero);
-				vert.TextureCoordinate = new Vector2((vert.Position.X - _position.X) / _topSize, (vert.Position.Z - _position.Z) / _topSize);
+				vert.TextureCoordinate = new Vector2(((vert.Position.X - _position.X) / _topSize), ((vert.Position.Z - _position.Z) / _topSize)) / _scale;
 				Vertices[i] = vert;
 				x++;
 			}

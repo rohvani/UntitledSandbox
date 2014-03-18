@@ -10,6 +10,7 @@ namespace UntitledSandbox.Terrain.Renderers
 {
 	public class NoiseTerrainRenderer : Renderer
 	{
+		public int Scale { get; private set; }
 		public const string EFFECT = "effects/Series4Effects";
 		public const string TEXTURE = "textures/grass";
 		public const float AMBIENT_LIGHT = 0.4f;
@@ -34,8 +35,9 @@ namespace UntitledSandbox.Terrain.Renderers
 		private IndexBuffer TerrainIndexBuffer { get; set; }
 		private VertexDeclaration TerrainVertexDeclaration { get; set; }
 
-		public NoiseTerrainRenderer()
+		public NoiseTerrainRenderer(int scale = 1)
 		{
+			this.Scale = scale;
 		}
 
 		public override void Load()
@@ -106,9 +108,9 @@ namespace UntitledSandbox.Terrain.Renderers
 			{
 				for (int y = 0; y < this.TerrainLength; y++)
 				{
-					terrainVertices[x + y * this.TerrainWidth].Position = new Vector3(x, this.HeightMap.Heights[x, y] * 20, -y);
-					terrainVertices[x + y * this.TerrainWidth].TextureCoordinate.X = (float) x / 30.0f;
-					terrainVertices[x + y * this.TerrainWidth].TextureCoordinate.Y = (float) y / 30.0f;
+					terrainVertices[x + y * this.TerrainWidth].Position = new Vector3(x, this.HeightMap.Heights[x, y] * 20, -y) * this.Scale;
+					terrainVertices[x + y * this.TerrainWidth].TextureCoordinate.X = (float) x / (this.Scale * 30);
+					terrainVertices[x + y * this.TerrainWidth].TextureCoordinate.Y = (float) y / (this.Scale * 30);
 				}
 			}
 
@@ -181,6 +183,7 @@ namespace UntitledSandbox.Terrain.Renderers
 		{
 			//RasterizerState state = new RasterizerState();
 			//state.FillMode = FillMode.WireFrame;
+			//state.CullMode = CullMode.None;
 			//this.GraphicsDevice.RasterizerState = state;
 
 			Effect effect = this.ContentManager.Get<Effect>(EFFECT);
