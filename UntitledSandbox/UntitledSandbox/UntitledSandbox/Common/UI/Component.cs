@@ -4,6 +4,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System;
 using UntitledSandbox.Managers;
+using UntitledSandbox.Common.Utils;
 
 namespace UntitledSandbox.Common.UI
 {
@@ -31,6 +32,9 @@ namespace UntitledSandbox.Common.UI
 
 		public Vector2 Position { get; set; }
 		public Vector2 Size { get; set; }
+
+		private Vector2Range Range { get; set; }
+
 		public Container Parent { get; protected set; }
 
 		public Component(Vector2 position, Vector2 size, string name="Window")
@@ -38,6 +42,10 @@ namespace UntitledSandbox.Common.UI
 			this.Position = position;
 			this.Size = size;
 			this.Name = name;
+
+			this.Range = new Vector2Range(this.Position, this.Position + this.Size);
+
+			this.Dragged += this.HandleDrag;
 		}
 
 		public Component() : this(Vector2.Zero, Vector2.Zero)
@@ -49,33 +57,32 @@ namespace UntitledSandbox.Common.UI
 
 		public virtual bool Contains(Vector2 pixel)
 		{
-			// There's a better way to do this calculation, probably using a Range system
-			// I'm pondering (pixel.X - this.Position.X) > 0 && < this.Size.X
-			if (pixel.X >= this.Position.X && pixel.X <= (this.Position.X + this.Size.X) &&
-				pixel.Y >= this.Position.Y && pixel.Y <= (this.Position.Y + this.Size.Y))
-				return true;
-			
-			return false;
+			return this.Range.Contains(pixel);
+		}
+
+		private void HandleDrag(object sender, DragEventArgs args)
+		{
+			this.Range = new Vector2Range(this.Position, this.Position + this.Size);
 		}
 
 		public void RaiseClickEvent(Vector2 clickLocation, object sender = null)
 		{
-			this.Clicked(sender, new ClickEventArgs(clickLocation));
+			if (this.Clicked != null) this.Clicked(sender, new ClickEventArgs(clickLocation));
 		}
 
 		public void RaiseClickEvent(ClickEventArgs args, object sender = null)
 		{
-			this.Clicked(sender, args);
+			if (this.Clicked != null) this.Clicked(sender, args);
 		}
 
 		public void RaiseDragEvent(Vector2 from, Vector2 to, object sender = null)
 		{
-			this.Dragged(sender, new DragEventArgs(from, to));
+			if (this.Dragged != null) this.Dragged(sender, new DragEventArgs(from, to));
 		}
 
 		public void RaiseDragEvent(DragEventArgs args, object sender = null)
 		{
-			this.Dragged(sender, args);
+			if (this.Dragged != null) this.Dragged(sender, args);
 		}
 	}
 

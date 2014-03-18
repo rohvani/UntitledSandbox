@@ -60,9 +60,9 @@ namespace UntitledSandbox
 
 			this.SkyRenderer = new SkySphereRenderer();
 			
-			this.TerrainRenderer = new QuadTreeRenderer(Vector3.Zero, 1);
+			//this.TerrainRenderer = new QuadTreeRenderer(Vector3.Zero, 1);
 			//this.TerrainRenderer = new NoiseTerrainRenderer(12);
-			//this.TerrainRenderer = new BlockTerrainRenderer();
+			this.TerrainRenderer = new BlockTerrainRenderer();
 
 			// [XNA]
 			base.Initialize();
