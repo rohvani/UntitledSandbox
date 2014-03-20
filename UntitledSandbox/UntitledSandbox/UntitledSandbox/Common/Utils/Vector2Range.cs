@@ -33,5 +33,10 @@ namespace UntitledSandbox.Common.Utils
 		{
 			return this.RangeX.Contains(f.X) && this.RangeY.Contains(f.Y);
 		}
+
+		public override String ToString()
+		{
+			return "{min=" + this.Min + " max=" + this.Max + "}";
+		}
 	}
 }

@@ -17,23 +17,23 @@ namespace UntitledSandbox.Common.UI
 		public Panel(Vector2 position, Vector2 size, string name="Window") : base(position, size, name)
 		{
 			// add Exit button via UIButton
-			this.Dragged += this.HandleDrag;
+			this.Dragged += delegate(object sender, DragEventArgs args) { UpdateTitleBarRange(); };
 
 			this.TitleBarRange = new Vector2Range(this.Position.X, this.Position.Y, this.Position.X + this.Size.X, this.Position.Y + TITLE_BAR_HEIGHT);
 
 			Button exitButton = new Button();
-			exitButton.customImage = "textures/ui/windowPixel";
-			exitButton.Parent = this;
+			exitButton.CustomImage = "textures/ui/windowPixel";
 			exitButton.Size = new Vector2(8, 8);
 			exitButton.Position = new Vector2(this.Size.X - 12, 4);
-			exitButton.color = Color.Red;
+			exitButton.Color = Color.Red;
 
-			exitButton.Clicked += OnClick;
-		}
+			// Using an Anonymous Method since only the event handler needs to call it
+			exitButton.Clicked += delegate(object source, ClickEventArgs args) 
+			{
+				Console.WriteLine("Clicked");
+			};
 
-		public void OnClick(object source, ClickEventArgs args)
-		{
-			Console.WriteLine("Clicked");
+			this.AddChild(exitButton);
 		}
 
 		public Panel() : this(Vector2.Zero, Vector2.Zero)
@@ -69,11 +69,14 @@ namespace UntitledSandbox.Common.UI
 
 		}
 
-		public void HandleDrag(object sender, DragEventArgs args)
+		public override void Drag(Vector2 from, Vector2 to)
 		{
-			if (this.TitleBarRange.Contains(args.From) || UIManager.IsDragging)
-				this.Position += (args.From - args.To);
+			if (this.TitleBarRange.Contains(from) || UIManager.IsDragging)
+				this.Position += (from - to);
+		}
 
+		public void UpdateTitleBarRange()
+		{
 			this.TitleBarRange = new Vector2Range(this.Position.X, this.Position.Y, this.Position.X + this.Size.X, this.Position.Y + TITLE_BAR_HEIGHT);
 		}
 

@@ -5,39 +5,61 @@ using System.Text;
 using Microsoft.Xna.Framework;
 using UntitledSandbox.Managers;
 using Microsoft.Xna.Framework.Graphics;
+using UntitledSandbox.Common.Utils;
 
 namespace UntitledSandbox.Common.UI
 {
 	public class Label : Component
 	{
-		private string Text;
-		private string Font;
+		const string DEFAULT_FONT = "fonts/default";
 
-		public Label(string text, Vector2 position, string font = "fonts/default")
+		private Vector2 TextSize { get { return ContentManager.Get<SpriteFont>(this.Font).MeasureString(this.Text); } }
+
+		public string Text { get; set; }
+		public string Font { get; set; }
+
+		public Label(string text, Vector2 position, string font=DEFAULT_FONT)
 		{
-			this.Position = position;
-			this.Size = ContentManager.Get<SpriteFont>(font).MeasureString(text);
+			this.Name = "Label";
 
 			this.Text = text;
-			this.Font = font;	
+			this.Font = font;
+
+			this.Position = position;
+			this.Size = this.TextSize;
+
+			this.UpdateRange();
+
+			this.Dragged += delegate(object sender, DragEventArgs args) { this.UpdateRange(); };
 		}
 
-		public Label(string text, Vector2 position, Container parent, string font="fonts/default")
+		public Label(Container parent, string text, Vector2 position, string font=DEFAULT_FONT)
 		{
-			this.Parent = parent;
-			this.Parent.Children.Add(this);
+			this.Name = "Label";
 
-			this.Position = position; // Position will be local position within parent
-			this.Size = ContentManager.Get<SpriteFont>(font).MeasureString(text);
+			parent.AddChild(this);
 
 			this.Text = text;
-			this.Font = font;	
+			this.Font = font;
+
+			this.Position = position; // Position will be local position within parent
+			this.Size = this.TextSize;
+
+			this.UpdateRange();
+
+			this.Dragged += delegate(object sender, DragEventArgs args) { this.UpdateRange(); };
 		}
 
 		public override void Draw()
 		{
 			Vector2 pos = Parent == null ? this.Position : this.Parent.Position + this.Position;
 			SpriteBatch.DrawString(ContentManager.Get<SpriteFont>(Font), Text, pos, Color.White);
+		}
+
+		public override void UpdateRange()
+		{
+			Vector2 parentPosition = this.Parent == null ? Vector2.Zero : this.Parent.Position; 
+			this.Range = new Vector2Range(parentPosition + this.Position, parentPosition + this.Position + this.Size);
 		}
 
 		public override void Update()

@@ -14,27 +14,13 @@ namespace UntitledSandbox.Common.UI
 		protected GraphicsDevice GraphicsDevice { get { return Game.Instance.GraphicsDevice; } }
 		protected SpriteBatch SpriteBatch { get { return Game.Instance.SpriteBatch; } }
 
-		private Vector2Range Range { get; set; }
+		public Vector2Range Range { get; set; }
 
 		public Vector2 Position { get; set; }
 		public Vector2 Size;
 
 		public string Name { get; set; }
-
-		private Container _parent;
-		public Container Parent
-		{
-			get
-			{
-				return this._parent;
-			}
-
-			set
-			{
-				value.Children.Add(this);
-				this._parent = value;
-			}
-		}
+		public Container Parent { get; set; }
 
 		public Component(Vector2 position, Vector2 size, string name="Window")
 		{
@@ -44,7 +30,7 @@ namespace UntitledSandbox.Common.UI
 
 			this.Range = new Vector2Range(this.Position, this.Position + this.Size);
 
-			this.Dragged += this.HandleDrag;
+			this.Dragged += delegate(object sender, DragEventArgs args) { this.UpdateRange(); };
 		}
 
 		public Component() : this(Vector2.Zero, Vector2.Zero)
@@ -54,12 +40,17 @@ namespace UntitledSandbox.Common.UI
 		public abstract void Draw();
 		public abstract void Update();
 
+		public virtual void Drag(Vector2 from, Vector2 to)
+		{
+
+		}
+
 		public virtual bool Contains(Vector2 pixel)
 		{
 			return this.Range.Contains(pixel);
 		}
 
-		private void HandleDrag(object sender, DragEventArgs args)
+		public virtual void UpdateRange()
 		{
 			this.Range = new Vector2Range(this.Position, this.Position + this.Size);
 		}

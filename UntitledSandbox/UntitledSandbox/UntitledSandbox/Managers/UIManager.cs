@@ -76,7 +76,8 @@ namespace UntitledSandbox.Managers
 			if (window != null)
 			{
 				FocusWindow(window);
-				window.RaiseDragEvent(from, to);		
+				window.Drag(from, to);
+				window.RaiseDragEvent(from, to);
 			}
 		}
 
