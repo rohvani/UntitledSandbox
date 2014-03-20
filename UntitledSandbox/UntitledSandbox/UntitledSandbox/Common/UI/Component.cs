@@ -10,31 +10,16 @@ namespace UntitledSandbox.Common.UI
 {
 	public abstract class Component
 	{
-		protected ContentManager ContentManager
-		{
-			get { return Game.Instance.ContentManager; }
-		}
+		protected ContentManager ContentManager { get { return Game.Instance.ContentManager; } }
+		protected GraphicsDevice GraphicsDevice { get { return Game.Instance.GraphicsDevice; } }
+		protected SpriteBatch SpriteBatch { get { return Game.Instance.SpriteBatch; } }
 
-		protected GraphicsDevice GraphicsDevice
-		{
-			get { return Game.Instance.GraphicsDevice; }
-		}
-
-		protected SpriteBatch SpriteBatch
-		{
-			get { return Game.Instance.SpriteBatch; }
-		}
-
-		public event EventHandler<ClickEventArgs> Clicked;
-		public event EventHandler<DragEventArgs> Dragged;
-
-		public string Name { get; set; }
+		private Vector2Range Range { get; set; }
 
 		public Vector2 Position { get; set; }
 		public Vector2 Size { get; set; }
 
-		private Vector2Range Range { get; set; }
-
+		public string Name { get; set; }
 		public Container Parent { get; protected set; }
 
 		public Component(Vector2 position, Vector2 size, string name="Window")
@@ -65,46 +50,55 @@ namespace UntitledSandbox.Common.UI
 			this.Range = new Vector2Range(this.Position, this.Position + this.Size);
 		}
 
+		#region Events
+		public event EventHandler<ClickEventArgs> Clicked;
+		public event EventHandler<DragEventArgs> Dragged;
+
 		public void RaiseClickEvent(Vector2 clickLocation, object sender = null)
 		{
-			if (this.Clicked != null) this.Clicked(sender, new ClickEventArgs(clickLocation));
+			if (this.Clicked != null)
+				this.Clicked(sender, new ClickEventArgs(clickLocation));
 		}
 
 		public void RaiseClickEvent(ClickEventArgs args, object sender = null)
 		{
-			if (this.Clicked != null) this.Clicked(sender, args);
+			if (this.Clicked != null)
+				this.Clicked(sender, args);
 		}
 
 		public void RaiseDragEvent(Vector2 from, Vector2 to, object sender = null)
 		{
-			if (this.Dragged != null) this.Dragged(sender, new DragEventArgs(from, to));
+			if (this.Dragged != null)
+				this.Dragged(sender, new DragEventArgs(from, to));
 		}
 
 		public void RaiseDragEvent(DragEventArgs args, object sender = null)
 		{
-			if (this.Dragged != null) this.Dragged(sender, args);
+			if (this.Dragged != null)
+				this.Dragged(sender, args);
 		}
-	}
 
-	public class ClickEventArgs : EventArgs
-	{
-		public ClickEventArgs(Vector2 clickLocation)
+		public class ClickEventArgs : EventArgs
 		{
-			this.ClickLocation = clickLocation;
+			public ClickEventArgs(Vector2 clickLocation)
+			{
+				this.ClickLocation = clickLocation;
+			}
+
+			public Vector2 ClickLocation { get; private set; }
 		}
 
-		public Vector2 ClickLocation { get; private set; }
-	}
-
-	public class DragEventArgs : EventArgs
-	{
-		public DragEventArgs(Vector2 from, Vector2 to)
+		public class DragEventArgs : EventArgs
 		{
-			this.From = from;
-			this.To = to;
-		}
+			public DragEventArgs(Vector2 from, Vector2 to)
+			{
+				this.From = from;
+				this.To = to;
+			}
 
-		public Vector2 From { get; private set; }
-		public Vector2 To { get; private set; }
+			public Vector2 From { get; private set; }
+			public Vector2 To { get; private set; }
+		}
+		#endregion
 	}
 }
