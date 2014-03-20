@@ -82,7 +82,8 @@ namespace UntitledSandbox.Managers
 
 		public static void CheckDragging(Vector2 from)
 		{
-			if (GetWindowAt(from) != null) IsDragging = true;
+			Component window = GetWindowAt(from);
+			if ( window != null && window.isDraggable(from)) IsDragging = true;
 		}
 	}
 }

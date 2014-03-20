@@ -17,10 +17,24 @@ namespace UntitledSandbox.Common.UI
 		private Vector2Range Range { get; set; }
 
 		public Vector2 Position { get; set; }
-		public Vector2 Size { get; set; }
+		public Vector2 Size;
 
 		public string Name { get; set; }
-		public Container Parent { get; protected set; }
+
+		private Container _parent;
+		public Container Parent
+		{
+			get
+			{
+				return this._parent;
+			}
+
+			set
+			{
+				value.Children.Add(this);
+				this._parent = value;
+			}
+		}
 
 		public Component(Vector2 position, Vector2 size, string name="Window")
 		{
@@ -48,6 +62,11 @@ namespace UntitledSandbox.Common.UI
 		private void HandleDrag(object sender, DragEventArgs args)
 		{
 			this.Range = new Vector2Range(this.Position, this.Position + this.Size);
+		}
+
+		public virtual bool isDraggable(Vector2 from)
+		{
+			return false;
 		}
 
 		#region Events

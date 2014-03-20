@@ -20,6 +20,20 @@ namespace UntitledSandbox.Common.UI
 			this.Dragged += this.HandleDrag;
 
 			this.TitleBarRange = new Vector2Range(this.Position.X, this.Position.Y, this.Position.X + this.Size.X, this.Position.Y + TITLE_BAR_HEIGHT);
+
+			Button exitButton = new Button();
+			exitButton.customImage = "textures/ui/windowPixel";
+			exitButton.Parent = this;
+			exitButton.Size = new Vector2(8, 8);
+			exitButton.Position = new Vector2(this.Size.X - 12, 4);
+			exitButton.color = Color.Red;
+
+			exitButton.Clicked += OnClick;
+		}
+
+		public void OnClick(object source, ClickEventArgs args)
+		{
+			Console.WriteLine("Clicked");
 		}
 
 		public Panel() : this(Vector2.Zero, Vector2.Zero)
@@ -61,6 +75,12 @@ namespace UntitledSandbox.Common.UI
 				this.Position += (args.From - args.To);
 
 			this.TitleBarRange = new Vector2Range(this.Position.X, this.Position.Y, this.Position.X + this.Size.X, this.Position.Y + TITLE_BAR_HEIGHT);
+		}
+
+		public override bool isDraggable(Vector2 from)
+		{
+			if (this.TitleBarRange.Contains(from)) return true;
+			return false;
 		}
 	}
 }

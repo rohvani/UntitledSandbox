@@ -24,6 +24,7 @@ namespace UntitledSandbox.Common.UI
 		{
 			foreach (Component child in this.Children)
 			{
+				Console.WriteLine("clicked lol");
 				if (child.Contains(args.ClickLocation))
 				{
 					child.RaiseClickEvent(args);
