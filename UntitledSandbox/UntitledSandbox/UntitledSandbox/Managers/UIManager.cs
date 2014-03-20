@@ -9,7 +9,7 @@ using UntitledSandbox.Common.UI;
 
 namespace UntitledSandbox.Managers
 {
-	public class UIManager
+	public static class UIManager
 	{
 		private static List<Component> activeWindows = new List<Component>();
 		public static bool IsDragging = false;

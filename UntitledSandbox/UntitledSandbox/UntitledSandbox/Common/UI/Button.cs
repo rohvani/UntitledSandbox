@@ -32,8 +32,12 @@ namespace UntitledSandbox.Common.UI
 			if (CustomImage.Length > 0)
 			{
 				Texture2D buttonTexture = this.ContentManager.Get<Texture2D>(CustomImage);
-				Rectangle button = new Rectangle((int)pos.X, (int)pos.Y, (int)Size.X, (int)Size.Y);
-				this.SpriteBatch.Draw(buttonTexture, button, Color);
+
+				Rectangle buttonOuter = new Rectangle((int)pos.X, (int)pos.Y, (int)Size.X, (int)Size.Y);
+				Rectangle buttonInner = new Rectangle((int)pos.X + 1, (int)pos.Y + 1, (int)Size.X - 2 , (int)Size.Y - 2);
+
+				this.SpriteBatch.Draw(buttonTexture, buttonOuter, Color.LightGray);
+				this.SpriteBatch.Draw(buttonTexture, buttonInner, Color);
 			}
 			else
 			{

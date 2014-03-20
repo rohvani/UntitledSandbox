@@ -12,7 +12,7 @@ namespace UntitledSandbox.Common.UI
 	{
 		const int TITLE_BAR_HEIGHT = 16;
 
-		private Vector2Range TitleBarRange { get; set; }
+		public Vector2Range TitleBarRange { get; private set; }
 
 		public Panel(Vector2 position, Vector2 size, string name="Window") : base(position, size, name)
 		{
@@ -30,7 +30,7 @@ namespace UntitledSandbox.Common.UI
 			// Using an Anonymous Method since only the event handler needs to call it
 			exitButton.Clicked += delegate(object source, ClickEventArgs args) 
 			{
-				Console.WriteLine("Clicked");
+				UIManager.UnregisterComponent(this);
 			};
 
 			this.AddChild(exitButton);

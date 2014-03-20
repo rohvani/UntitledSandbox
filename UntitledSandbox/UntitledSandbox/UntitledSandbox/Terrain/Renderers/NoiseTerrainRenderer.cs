@@ -109,8 +109,8 @@ namespace UntitledSandbox.Terrain.Renderers
 				for (int y = 0; y < this.TerrainLength; y++)
 				{
 					terrainVertices[x + y * this.TerrainWidth].Position = new Vector3(x, this.HeightMap.Heights[x, y] * 20, -y) * this.Scale;
-					terrainVertices[x + y * this.TerrainWidth].TextureCoordinate.X = (float) x / (this.Scale * 30);
-					terrainVertices[x + y * this.TerrainWidth].TextureCoordinate.Y = (float) y / (this.Scale * 30);
+					terrainVertices[x + y * this.TerrainWidth].TextureCoordinate.X = (float) x / (this.Scale);
+					terrainVertices[x + y * this.TerrainWidth].TextureCoordinate.Y = (float) y / (this.Scale);
 				}
 			}
 
