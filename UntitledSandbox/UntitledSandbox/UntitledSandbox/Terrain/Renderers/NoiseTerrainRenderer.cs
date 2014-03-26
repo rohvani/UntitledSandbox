@@ -5,6 +5,7 @@ using System.Text;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework;
 using UntitledSandbox.Managers;
+using UntitledSandbox.PlayerData;
 
 namespace UntitledSandbox.Terrain.Renderers
 {
@@ -45,7 +46,7 @@ namespace UntitledSandbox.Terrain.Renderers
 			this.ContentManager.Load<Texture2D>(TEXTURE);
 			this.ContentManager.Load<Effect>(EFFECT);
 
-			this.HeightMap = new HeightMap(512);
+			this.HeightMap = new HeightMap(513);
 			this.HeightMap.AddPerlinNoise(5.0f);
 			this.HeightMap.Perturb(32.0f, 32.0f);
 			for (int i = 0; i < 10; i++)
@@ -109,8 +110,8 @@ namespace UntitledSandbox.Terrain.Renderers
 				for (int y = 0; y < this.TerrainLength; y++)
 				{
 					terrainVertices[x + y * this.TerrainWidth].Position = new Vector3(x, this.HeightMap.Heights[x, y] * 20, -y) * this.Scale;
-					terrainVertices[x + y * this.TerrainWidth].TextureCoordinate.X = (float) x / (this.Scale);
-					terrainVertices[x + y * this.TerrainWidth].TextureCoordinate.Y = (float) y / (this.Scale);
+					terrainVertices[x + y * this.TerrainWidth].TextureCoordinate.X = (float) x / (this.Scale * 30);
+					terrainVertices[x + y * this.TerrainWidth].TextureCoordinate.Y = (float) y / (this.Scale * 30);
 				}
 			}
 
@@ -181,10 +182,11 @@ namespace UntitledSandbox.Terrain.Renderers
 
 		private void DrawTerrain()
 		{
-			//RasterizerState state = new RasterizerState();
-			//state.FillMode = FillMode.WireFrame;
-			//state.CullMode = CullMode.None;
-			//this.GraphicsDevice.RasterizerState = state;
+			RasterizerState state = new RasterizerState();
+			state.FillMode = Controls.IsWire ? FillMode.WireFrame : FillMode.Solid;
+			state.CullMode = CullMode.None;
+			this.GraphicsDevice.RasterizerState = state;
+
 
 			Effect effect = this.ContentManager.Get<Effect>(EFFECT);
 			effect.CurrentTechnique = effect.Techniques["Textured"];

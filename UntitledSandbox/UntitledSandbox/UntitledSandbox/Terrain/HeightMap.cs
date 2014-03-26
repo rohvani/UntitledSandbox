@@ -19,7 +19,7 @@ namespace UntitledSandbox.Terrain
 			this.Perlin = new PerlinGenerator(32546);
 		}
 
-		public HeightMap() : this(512)
+		public HeightMap() : this(641)
 		{
 		}
 

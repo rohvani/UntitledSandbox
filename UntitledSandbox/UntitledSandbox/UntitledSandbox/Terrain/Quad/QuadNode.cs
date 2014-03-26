@@ -101,7 +101,7 @@ namespace UntitledSandbox.Terrain.Quad
 			Bounds = new BoundingBox(_parentTree.Vertices[VertexTopLeft.Index].Position,
 						_parentTree.Vertices[VertexBottomRight.Index].Position);
 			Bounds.Min.Y = -950f;
-			Bounds.Max.Y = 950f;
+			Bounds.Max.Y = 950;
 
 			if (nodeSize >= 4)
 				AddChildren();
@@ -319,9 +319,10 @@ namespace UntitledSandbox.Terrain.Quad
 
 		internal void SetActiveVertices()
 		{
-			//if (!IsInView) return;
+			if (!IsInView) return;
 
 			if (_isSplit && this.HasChildren)
+			//if (this.HasChildren)
 			{
 				ChildTopLeft.SetActiveVertices();
 				ChildTopRight.SetActiveVertices();
@@ -478,9 +479,9 @@ namespace UntitledSandbox.Terrain.Quad
 		{
 			if (!IsInView) return;
 
-			//Make sure parent node is split
+			////Make sure parent node is split
 			if (_parent != null && !_parent.IsSplit)
-				_parent.Split();
+			    _parent.Split();
 
 			if (CanSplit)
 			{

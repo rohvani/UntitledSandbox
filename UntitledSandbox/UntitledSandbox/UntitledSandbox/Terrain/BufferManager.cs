@@ -22,8 +22,8 @@ namespace UntitledSandbox.Terrain
 
 			_IndexBuffers = new IndexBuffer[]
                     {
-                            new IndexBuffer(_device, IndexElementSize.ThirtyTwoBits, 100000, BufferUsage.WriteOnly),
-                            new IndexBuffer(_device, IndexElementSize.ThirtyTwoBits, 100000, BufferUsage.WriteOnly)
+                            new IndexBuffer(_device, IndexElementSize.ThirtyTwoBits, 10000000, BufferUsage.WriteOnly),
+                            new IndexBuffer(_device, IndexElementSize.ThirtyTwoBits, 10000000, BufferUsage.WriteOnly)
                     };
 
 		}
@@ -37,6 +37,7 @@ namespace UntitledSandbox.Terrain
 		internal void UpdateIndexBuffer(int[] indices, int indexCount)
 		{
 			int inactive = _active == 0 ? 1 : 0;
+			if (indexCount != 0)
 			_IndexBuffers[inactive].SetData(indices, 0, indexCount);
 		}
 

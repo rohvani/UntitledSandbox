@@ -41,6 +41,24 @@ namespace UntitledSandbox.Terrain.Quad
 			CalculateAllNormals();
 		}
 
+		public TreeVertexCollection(Vector3 position, HeightMap heightMap, int scale)
+		{
+			_scale = scale;
+			_topSize = heightMap.Size - 1;
+			_halfSize = _topSize / 2;
+			_position = position;
+			_vertexCount = heightMap.Size * heightMap.Size;
+
+			//Initialize our array to hold the vertices
+			Vertices = new VertexPositionNormalTexture[_vertexCount];
+
+			//Our method to populate the vertex collection
+			this.BuildVertices(heightMap.Heights);
+
+			//Our method to  calculate the normals for all vertices
+			CalculateAllNormals();
+		}
+
 		private void BuildVertices(Texture2D heightMap)
 		{
 			var heightMapColors = new Color[_vertexCount];
@@ -59,11 +77,39 @@ namespace UntitledSandbox.Terrain.Quad
 					z++;
 				}
 
-				y = _position.Y + (heightMapColors[i].R / 5.0f);
+				y = _position.Y + (heightMapColors[i].R / 2.0f);
 				var vert = new VertexPositionNormalTexture(new Vector3(x * _scale, y * _scale, z * _scale), Vector3.Zero, Vector2.Zero);
 				vert.TextureCoordinate = new Vector2(((vert.Position.X - _position.X) / _topSize), ((vert.Position.Z - _position.Z) / _topSize)) / _scale;
 				Vertices[i] = vert;
 				x++;
+			}
+		}
+
+		private void BuildVertices(float[,] heightMap)
+		{
+			var heightMapColors = new Color[heightMap.Length];
+
+			float x = _position.X;
+			float z = _position.Z;
+			float y = _position.Y;
+			float maxX = x + _topSize;
+
+			for (int i = 0; i < heightMap.GetLength(0); i++)
+			{
+				for (int j = 0; j < heightMap.GetLength(1); j++)
+				{
+					if (x > maxX)
+					{
+						x = _position.X;
+						z++;
+					}
+
+					y = _position.Y + (heightMap[i,j] * 25); // assume normalized
+					var vert = new VertexPositionNormalTexture(new Vector3(x * _scale, y * _scale, z * _scale), Vector3.Zero, Vector2.Zero);
+					vert.TextureCoordinate = new Vector2(((vert.Position.X - _position.X) / _topSize), ((vert.Position.Z - _position.Z) / _topSize)) / _scale;
+					Vertices[(i * heightMap.GetLength(1)) + j] = vert;
+					x++;
+				}
 			}
 		}
 
