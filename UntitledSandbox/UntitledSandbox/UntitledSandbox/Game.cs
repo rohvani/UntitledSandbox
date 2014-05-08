@@ -59,8 +59,9 @@ namespace UntitledSandbox
 			this.Player.Camera.ProjectionMatrix = Matrix.CreatePerspectiveFieldOfView(MathHelper.PiOver4, GraphicsDevice.Viewport.AspectRatio, 0.3f, 10000.0f);
 
 			this.SkyRenderer = new SkySphereRenderer();
-			
-			this.TerrainRenderer = new QuadTreeRenderer(new Vector3(0, -100, 0), 1);
+
+			this.TerrainRenderer = new FractralTerrainRenderer();
+			//this.TerrainRenderer = new QuadTreeRenderer(new Vector3(0, -100, 0), 1);
 			//this.TerrainRenderer = new NoiseTerrainRenderer(1);
 			//this.TerrainRenderer = new BlockTerrainRenderer();
 
