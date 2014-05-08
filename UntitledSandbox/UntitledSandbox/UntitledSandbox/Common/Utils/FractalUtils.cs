@@ -318,7 +318,7 @@ namespace UntitledSandbox.Common.Utils
 
 			   We want the four corners of the array to have the same
 			   point. This will allow us to tile the arrays next to each other
-			   such that they join seemlessly. */
+			   such that they join seamlessly. */
 
 			stride = subSize / 2;
 			array[0, 0] = 

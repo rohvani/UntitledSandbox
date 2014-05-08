@@ -51,18 +51,17 @@ namespace UntitledSandbox.Terrain.Renderers
 			this.ContentManager.Load<Effect>(EFFECT);
 
 			int size = 257;
+			int seed = 32456433;
+			float heightScale = 5f;
+			float roughness = 1f;
 
-			this.HeightMap = FractalUtils.Fill2DFractArray(initArray(new float[size, size], -255), size - 1, 32546, 10f, 1f);
+			float[,] map = initArray(new float[size, size], -255);
+			this.HeightMap = FractalUtils.Fill2DFractArray(map, size-1, seed, heightScale, roughness);
 
-			float[,] map2 = new float[size, size];
-			map2 = initArray(map2, -255);
-
-			for (int x = 0; x < size; x++)
-			{
-				map2[x, 0] = this.HeightMap[x, 256];
-			}
-
-			this.HeightMap2 = FractalUtils.Fill2DFractArray(map2, size - 1, 32546, 10f, 1f);
+			float[,] map2 = initArray(new float[size, size], -255);
+			for (int y = 0; y < size; y++)
+				map2[0, y] = this.HeightMap[256, y];
+			this.HeightMap2 = FractalUtils.Fill2DFractArray(map2, size-1, seed, heightScale, roughness);
 
 			this.LoadVertices();
 		}
@@ -94,7 +93,7 @@ namespace UntitledSandbox.Terrain.Renderers
 			terrainVertices = this.CalculateNormals(terrainVertices, terrainIndices);
 			this.CopyToTerrainBuffers(terrainVertices, terrainIndices);
 
-			terrainVertices = this.SetUpTerrainVertices(this.HeightMap2, yPos: 256);
+			terrainVertices = this.SetUpTerrainVertices(this.HeightMap2, xPos: 256);
 			terrainIndices = this.SetUpTerrainIndices();
 			terrainVertices = this.CalculateNormals(terrainVertices, terrainIndices);
 			this.CopyToTerrainBuffers2(terrainVertices, terrainIndices);
@@ -233,7 +232,7 @@ namespace UntitledSandbox.Terrain.Renderers
 			effect.Parameters["xWorld"].SetValue(worldMatrix);
 			effect.Parameters["xView"].SetValue(this.Player.Camera.ViewMatrix);
 			effect.Parameters["xProjection"].SetValue(this.Player.Camera.ProjectionMatrix);
-
+			
 			effect.Parameters["xEnableLighting"].SetValue(true);
 			effect.Parameters["xAmbient"].SetValue(AMBIENT_LIGHT);
 			effect.Parameters["xLightDirection"].SetValue(LIGHT_DIRECTION);
@@ -248,17 +247,12 @@ namespace UntitledSandbox.Terrain.Renderers
 				int noVertices = this.TerrainVertexBuffer.VertexCount;
 				int noTriangles = this.TerrainIndexBuffer.IndexCount / 3;
 				this.GraphicsDevice.DrawIndexedPrimitives(PrimitiveType.TriangleList, 0, 0, noVertices, 0, noTriangles);
-			}
-
-			foreach (EffectPass pass in effect.CurrentTechnique.Passes)
-			{
-				pass.Apply();
 
 				this.GraphicsDevice.SetVertexBuffer(this.TerrainVertexBuffer2);
 				this.GraphicsDevice.Indices = this.TerrainIndexBuffer2;
 
-				int noVertices = this.TerrainVertexBuffer2.VertexCount;
-				int noTriangles = this.TerrainIndexBuffer2.IndexCount / 3;
+				noVertices = this.TerrainVertexBuffer2.VertexCount;
+				noTriangles = this.TerrainIndexBuffer2.IndexCount / 3;
 				this.GraphicsDevice.DrawIndexedPrimitives(PrimitiveType.TriangleList, 0, 0, noVertices, 0, noTriangles);
 			}
 		}

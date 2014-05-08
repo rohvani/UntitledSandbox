@@ -120,6 +120,7 @@
     <Compile Include="Common\Utils\Vector2Range.cs" />
     <Compile Include="Common\Utils\Vector3Range.cs" />
     <Compile Include="Terrain\BufferManager.cs" />
+    <Compile Include="Terrain\Fractal\Tile.cs" />
     <Compile Include="Terrain\Quad\NodeType.cs" />
     <Compile Include="Terrain\Quad\QuadNode.cs" />
     <Compile Include="Terrain\Quad\QuadNodeVertex.cs" />
