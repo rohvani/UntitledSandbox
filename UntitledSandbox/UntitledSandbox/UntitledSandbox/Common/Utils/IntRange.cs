@@ -22,5 +22,12 @@ namespace UntitledSandbox.Common.Utils
 		{
 			return i >= this.Min && i <= this.Max;
 		}
+
+		public int Clamp(int i)
+		{
+			if (i <= this.Min) return this.Min;
+			if (i >= this.Max) return this.Max;
+			return i;
+		}
 	}
 }

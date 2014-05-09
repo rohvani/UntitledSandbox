@@ -34,6 +34,11 @@ namespace UntitledSandbox.Common.Utils
 			return this.RangeX.Contains(f.X) && this.RangeY.Contains(f.Y);
 		}
 
+		public bool Contains(float x, float y)
+		{
+			return this.RangeX.Contains(x) && this.RangeY.Contains(y);
+		}
+
 		public override String ToString()
 		{
 			return "{min=" + this.Min + " max=" + this.Max + "}";

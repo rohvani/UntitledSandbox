@@ -11,44 +11,76 @@ namespace UntitledSandbox.Terrain.Fractal
 	public class Tile
 	{
 		public float[,] HeightMap;
+		public int Size { get; set; }
+		public int TileX { get; set; }
+		public int TileZ { get; set; }
+
+		public int X { get { return this.TileX * (this.Size - 1); } }
+		public int Z { get { return this.TileZ * (this.Size - 1); } }
+		public Matrix TranslationMatrix { get { return Matrix.CreateTranslation(this.X, 0, this.Z); } }
 
 		private VertexBuffer TerrainVertexBuffer { get; set; }
 		private IndexBuffer TerrainIndexBuffer { get; set; }
 
-		public int Size { get; set; }
-
-		public Tile(int size)
+		public BoundingBox Bounds;
+		public bool IsInView
 		{
+			get { return this.Bounds.Contains(Game.Instance.Player.Camera.Frustum) != ContainmentType.Disjoint; }
+		}
+
+		public Tile(int size, int x, int z)
+		{
+			this.TileX = x;
+			this.TileZ = z;
+
 			this.Size = size;
 			this.HeightMap = NewMap();
 		}
 
-		public void SeedMap(float[,] north, float[,] east, float[,] south, float[,] west)
+		/// <summary>
+		/// Returns true if the Tile contains a specific point.
+		/// </summary>
+		/// <param name="point">Vector3 representing the target point</param>
+		/// <returns>True if point is contained in the tile's bounding box</returns>
+		public bool Contains(Vector3 point)
 		{
-			if (north == null) north = NewMap();
-			if (east == null) east = NewMap();
-			if (south == null) south = NewMap();
-			if (west == null) west = NewMap();
-			
+			point.Y = 0;
+			return Bounds.Contains(point) == ContainmentType.Contains;
+		}
+
+		public bool Contains(BoundingFrustum boundingFrustrum)
+		{
+			return Bounds.Intersects(boundingFrustrum);
+		}
+
+		public void SeedMap(float[,] north, float[,] east, float[,] south, float[,] west)
+		{	
 			for (int i = 0; i < this.Size; i++)
 			{
-				// North
-				this.HeightMap[i, this.Size - 1] = north[i, 0];
+				if (north != null)
+					this.HeightMap[i, this.Size - 1] = north[i, 0];
 
-				// East
-				this.HeightMap[this.Size - 1, i] = east[0, i];
+				if (east != null) 
+					this.HeightMap[this.Size - 1, i] = east[0, i];
 
-				// South
-				this.HeightMap[i, 0] = south[i, this.Size - 1];
+				if (south != null)
+					this.HeightMap[i, 0] = south[i, this.Size - 1];
 
-				// West
-				this.HeightMap[0, i] = west[this.Size - 1, i];
+				if (west != null)
+					this.HeightMap[0, i] = west[this.Size - 1, i];
 			}
 		}
 
 		public void GenerateMap(int seed, float heightScale, float roughness)
 		{
 			this.HeightMap = FractalUtils.Fill2DFractArray(this.HeightMap, this.Size-1, seed, heightScale, roughness);
+
+			IEnumerable<float> vals = this.HeightMap.Cast<float>();
+
+			Vector3 min = new Vector3(this.X, vals.Min(), this.Z - (this.Size - 1));
+			Vector3 max = new Vector3(this.X + (this.Size - 1), vals.Max(), this.Z);
+			this.Bounds = BoundingBox.CreateFromPoints(new Vector3[] {min, max});
+			Console.Out.WriteLine("x:{0} z:{1} bounds:{2}", this.TileX, this.TileZ, this.Bounds); 
 		}
 
 		private static float[,] InitArray(float[,] array)
@@ -94,9 +126,9 @@ namespace UntitledSandbox.Terrain.Fractal
 			{
 				for (int y = 0; y < this.Size; y++)
 				{
-					terrainVertices[x + y * this.Size].Position = new Vector3(x, heightMap[x, y] * 20, -y);
-					terrainVertices[x + y * this.Size].TextureCoordinate.X = (float) (x) / (30);
-					terrainVertices[x + y * this.Size].TextureCoordinate.Y = (float) (y) / (30);
+					terrainVertices[x + y * this.Size].Position = new Vector3(x, heightMap[x, y], -y);
+					terrainVertices[x + y * this.Size].TextureCoordinate.X = (float) (x + (this.TileX * this.Size)) / (30);
+					terrainVertices[x + y * this.Size].TextureCoordinate.Y = (float) (y + (this.TileZ * this.Size)) / (30);
 				}
 			}
 
