@@ -119,6 +119,20 @@ namespace UntitledSandbox.Terrain.Renderers
 			effect.Parameters["xAmbient"].SetValue(AMBIENT_LIGHT);
 			effect.Parameters["xLightDirection"].SetValue(LIGHT_DIRECTION);
 
+			//BasicEffect effect = new BasicEffect(this.GraphicsDevice);
+			//effect.LightingEnabled = true;
+			//effect.AmbientLightColor = new Vector3(AMBIENT_LIGHT);
+			//effect.DirectionalLight0.Enabled = true;
+			//effect.DirectionalLight0.Direction = LIGHT_DIRECTION;
+			//effect.FogEnabled = true;
+			//effect.FogStart = 300f;
+			//effect.FogEnd = 1000f;
+			//effect.FogColor = Color.Black.ToVector3();
+			//effect.TextureEnabled = true;
+			//effect.Texture = Game.Instance.ContentManager.Get<Texture2D>(TEXTURE);
+			//effect.Projection = this.Player.Camera.ProjectionMatrix;
+			//effect.View = this.Player.Camera.ViewMatrix;
+
 			int tiles = 0;
 			foreach (Tile tile in this.Tiles)
 			{

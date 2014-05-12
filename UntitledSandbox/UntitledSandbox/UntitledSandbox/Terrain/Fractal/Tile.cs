@@ -25,7 +25,8 @@ namespace UntitledSandbox.Terrain.Fractal
 		public BoundingBox Bounds;
 		public bool IsInView
 		{
-			get { return this.Bounds.Contains(Game.Instance.Player.Camera.Frustum) != ContainmentType.Disjoint; }
+			//get { return this.Bounds.Contains(Game.Instance.Player.Camera.Frustum) != ContainmentType.Disjoint; }
+			get { return Game.Instance.Player.Camera.Frustum.FastIntersects(ref this.Bounds); }
 			//get { return true; }
 		}
 
