@@ -112,6 +112,7 @@
     <Compile Include="Common\UI\Button.cs" />
     <Compile Include="Common\UI\Component.cs" />
     <Compile Include="Common\UI\Container.cs" />
+    <Compile Include="Common\UI\FrameRateCounter.cs" />
     <Compile Include="Common\UI\Label.cs" />
     <Compile Include="Common\UI\Panel.cs" />
     <Compile Include="Common\Utils\FloatRange.cs" />

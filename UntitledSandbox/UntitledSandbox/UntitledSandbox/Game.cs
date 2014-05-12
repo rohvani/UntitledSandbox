@@ -65,6 +65,8 @@ namespace UntitledSandbox
 			//this.TerrainRenderer = new NoiseTerrainRenderer(1);
 			//this.TerrainRenderer = new BlockTerrainRenderer();
 
+			Components.Add(new FrameRateCounter(this));
+
 			// [XNA]
 			base.Initialize();
 		}

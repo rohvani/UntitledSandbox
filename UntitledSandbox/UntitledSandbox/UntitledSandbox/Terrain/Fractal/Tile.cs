@@ -26,6 +26,7 @@ namespace UntitledSandbox.Terrain.Fractal
 		public bool IsInView
 		{
 			get { return this.Bounds.Contains(Game.Instance.Player.Camera.Frustum) != ContainmentType.Disjoint; }
+			//get { return true; }
 		}
 
 		public Tile(int size, int x, int z)
