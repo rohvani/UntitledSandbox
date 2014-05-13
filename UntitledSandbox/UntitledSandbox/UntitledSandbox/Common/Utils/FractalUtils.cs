@@ -181,20 +181,20 @@ namespace UntitledSandbox.Common.Utils
 		 * Fill1DFractArray - Tessalate an array of values into an
 		 * approximation of fractal Brownian motion.
 		 */
-		public static void Fill1DFractArray(float[] array, int size, int seedValue, float heightScale, float h)
+		public static float[] Fill1DFractArray(float[] array, int size, int seedValue, float heightScale, float h)
 		{
 			int	i;
 			int	stride;
 			int subSize;
 			float ratio, scale;
 
-			if (!PowerOf2(size) || (size==1)) 
-			{
-				/* We can't tesselate the array if it is not a power of 2. */
-				if (Debug)
-					Console.WriteLine("Error: fill1DFractArray: size {0} is not a power of 2.", size);
-				return;
-			}
+			//if (!PowerOf2(size) || (size==1)) 
+			//{
+			//	/* We can't tesselate the array if it is not a power of 2. */
+			//	if (Debug)
+			//		Console.WriteLine("Error: fill1DFractArray: size {0} is not a power of 2.", size);
+			//	return array;
+			//}
 
 			/* subSize is the dimension of the array in terms of connected line
 			   segments, while size is the dimension in terms of number of
@@ -224,7 +224,7 @@ namespace UntitledSandbox.Common.Utils
 			/* Seed the endpoints of the array. To enable seamless wrapping,
 			   the endpoints need to be the same point. */
 			stride = subSize / 2;
-			array[0] = array[subSize] = 0.0f;
+			//array[0] = array[subSize] = 0.0f;
 
 			if (Debug)
 			{
@@ -251,6 +251,8 @@ namespace UntitledSandbox.Common.Utils
 				Console.WriteLine("complete");
 				Dump1DFractArray(array, size);
 			}
+
+			return array;
 		}
 
 		/*
@@ -321,10 +323,11 @@ namespace UntitledSandbox.Common.Utils
 			   such that they join seamlessly. */
 
 			stride = subSize / 2;
-			array[0, 0] = 
-				array[subSize, 0] =
-				array[subSize, subSize] =
-				  array[0, subSize] = 0.0f;
+
+			if (array[0, 0] == -255) array[0, 0] = 0f;
+			if (array[subSize, 0] == -255) array[subSize, 0] = 0f;
+			if (array[subSize, subSize] == -255) array[subSize, subSize] = 0f;
+			if (array[0, subSize] == -255) array[0, subSize] = 0f;
     
 			if (Debug)
 			{
@@ -394,7 +397,7 @@ namespace UntitledSandbox.Common.Utils
 				   "oddline" and "stride" to increment j to the desired value.
 				   */
 				oddline = false;
-				for (x = 0; x < subSize; x += stride)
+				for (x = 0; x <= subSize; x += stride)
 				{
 					oddline = !oddline;
 
@@ -410,10 +413,10 @@ namespace UntitledSandbox.Common.Utils
 
 						/* To wrap edges seamlessly, copy edge values around
 						   to other side of array */
-						if (x == 0 && array[subSize, y] == -255)
-							array[subSize, y] = array[x, y];
-						if (y == 0 && array[x, subSize] == -255)
-							array[x, subSize] = array[x, y];
+						//if (x == 0 && array[subSize, y] == -255)
+							//array[subSize, y] = array[x, y];
+						//if (y == 0 && array[x, subSize] == -255)
+							//array[x, subSize] = array[x, y];
 
 						y += stride;
 					}

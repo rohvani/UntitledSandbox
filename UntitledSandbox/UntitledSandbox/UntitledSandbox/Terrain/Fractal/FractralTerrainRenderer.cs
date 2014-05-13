@@ -8,16 +8,18 @@ using UntitledSandbox.PlayerData;
 using UntitledSandbox.Common.Utils;
 using UntitledSandbox.Terrain.Fractal;
 
-namespace UntitledSandbox.Terrain.Renderers
+namespace UntitledSandbox.Terrain.Fractal
 {
 	public class FractralTerrainRenderer : Renderer
 	{
+		private readonly bool DRAW_BOUNDING_BOXES = false;
+
 		public const string EFFECT = "effects/Series4Effects";
 		public const string TEXTURE = "textures/grass";
 		public const float AMBIENT_LIGHT = 0.2f;
 		public static Vector3 LIGHT_DIRECTION
 		{
-			get { return new Vector3(-0.5f, -1, -0.5f); }
+			get { return new Vector3(1f, 2, 1f); }
 		}
 
 		private int TileSize { get; set; }
@@ -25,13 +27,13 @@ namespace UntitledSandbox.Terrain.Renderers
 
 		private Tile[,] Tiles;
 
-		//List<VertexPositionColor[]> boxes = new List<VertexPositionColor[]>();
+		List<VertexPositionColor[]> boxes = new List<VertexPositionColor[]>();
 
-		//short[] bBoxIndices = {
-		//        0, 1, 1, 2, 2, 3, 3, 0, // Front edges
-		//        4, 5, 5, 6, 6, 7, 7, 4, // Back edges
-		//        0, 4, 1, 5, 2, 6, 3, 7 // Side edges connecting front and back
-		//};
+		short[] bBoxIndices = {
+		        0, 1, 1, 2, 2, 3, 3, 0, // Front edges
+		        4, 5, 5, 6, 6, 7, 7, 4, // Back edges
+		        0, 4, 1, 5, 2, 6, 3, 7 // Side edges connecting front and back
+		};
 
 		public FractralTerrainRenderer()
 		{
@@ -42,11 +44,11 @@ namespace UntitledSandbox.Terrain.Renderers
 			this.ContentManager.Load<Texture2D>(TEXTURE);
 			this.ContentManager.Load<Effect>(EFFECT);
 
-			this.TileSize = 257;
+			this.TileSize = 129;
 			Random random = new Random();
-			float heightScale = 500f;
-			float roughness = 0.990f;
-			int numTiles = 5;
+			float heightScale = 200f;
+			float roughness = 0.995f;
+			int numTiles = 10;
 
 			this.Tiles = new Tile[numTiles, numTiles];
 
@@ -54,48 +56,55 @@ namespace UntitledSandbox.Terrain.Renderers
 			{
 				for (int j = 0; j < numTiles; j++)
 				{
-					heightScale -= random.Next(420);
+					//heightScale -= random.Next(250);
 
 					this.Tiles[i, j] = new Tile(this.TileSize, i, j);
-					this.Tiles[i, j].SeedMap(
-						TryFetchTileHeightMap(i, j + 1),
-						TryFetchTileHeightMap(i + 1, j),
-						TryFetchTileHeightMap(i, j - 1),
-						TryFetchTileHeightMap(i - 1, j)
-					);
-					this.Tiles[i, j].GenerateMap(random.Next(), heightScale, roughness);
+					this.Tiles[i, j].Seed = random.Next();
+					this.Tiles[i, j].HeightScale = heightScale;
+					this.Tiles[i, j].Roughness = roughness;
 
-					heightScale = 250;
+					this.Tiles[i, j].SeedMap(
+						TryFetchTile(i, j + 1),
+						TryFetchTile(i + 1, j),
+						TryFetchTile(i, j - 1),
+						TryFetchTile(i - 1, j)
+					);
+
+					this.Tiles[i, j].GenerateMap();
+
+					//heightScale = 300;
 				}
 			}
 
 			foreach (Tile tile in this.Tiles)
 				tile.LoadVertices();
 
-			
-			//foreach (Tile tile in this.Tiles)
-			//{
-			//    BoundingBox box = tile.Bounds;
-			//    Vector3[] corners = box.GetCorners();
-			//    VertexPositionColor[] primitiveList = new VertexPositionColor[corners.Length];
+			if (DRAW_BOUNDING_BOXES)
+			{
+				foreach (Tile tile in this.Tiles)
+				{
+					BoundingBox box = tile.Bounds;
+					Vector3[] corners = box.GetCorners();
+					VertexPositionColor[] primitiveList = new VertexPositionColor[corners.Length];
 
-			//    // Assign the 8 box vertices
-			//    for (int i = 0; i < corners.Length; i++)
-			//    {
-			//        primitiveList[i] = new VertexPositionColor(corners[i], Color.White);
-			//    }
+					// Assign the 8 box vertices
+					for (int i = 0; i < corners.Length; i++)
+					{
+						primitiveList[i] = new VertexPositionColor(corners[i], Color.White);
+					}
 
-			//    boxes.Add(primitiveList);
-			//}
+					boxes.Add(primitiveList);
+				}
+			}
 		}
 
-		private float[,] TryFetchTileHeightMap(int i, int j)
+		private Tile TryFetchTile(int i, int j)
 		{
 			try
 			{
-				return this.Tiles[i, j].HeightMap;
+				return this.Tiles[i, j];
 			}
-			catch (Exception)
+			catch (IndexOutOfRangeException)
 			{
 				return null;
 			}
@@ -105,7 +114,7 @@ namespace UntitledSandbox.Terrain.Renderers
 		{
 			RasterizerState state = new RasterizerState();
 			state.FillMode = Controls.IsWire ? FillMode.WireFrame : FillMode.Solid;
-			state.CullMode = CullMode.None;
+			state.CullMode = CullMode.CullClockwiseFace;
 			this.GraphicsDevice.RasterizerState = state;
 
 			Effect effect = this.ContentManager.Get<Effect>(EFFECT);
@@ -124,7 +133,7 @@ namespace UntitledSandbox.Terrain.Renderers
 			//effect.AmbientLightColor = new Vector3(AMBIENT_LIGHT);
 			//effect.DirectionalLight0.Enabled = true;
 			//effect.DirectionalLight0.Direction = LIGHT_DIRECTION;
-			//effect.FogEnabled = true;
+			//effect.FogEnabled = false;
 			//effect.FogStart = 300f;
 			//effect.FogEnd = 1000f;
 			//effect.FogColor = Color.Black.ToVector3();
@@ -140,6 +149,7 @@ namespace UntitledSandbox.Terrain.Renderers
 				{
 					tiles++;
 					effect.Parameters["xWorld"].SetValue(tile.TranslationMatrix);
+					//effect.World = tile.TranslationMatrix;
 					
 					foreach (EffectPass pass in effect.CurrentTechnique.Passes)
 					{
@@ -151,21 +161,24 @@ namespace UntitledSandbox.Terrain.Renderers
 
 			Game.Instance.Window.Title = tiles.ToString();
 
-			//BasicEffect boxEffect = new BasicEffect(this.GraphicsDevice);
-			//boxEffect.World = Matrix.Identity;
-			//boxEffect.View = this.Player.Camera.ViewMatrix;
-			//boxEffect.Projection = this.Player.Camera.ProjectionMatrix;
-			//boxEffect.TextureEnabled = false;
+			if (DRAW_BOUNDING_BOXES)
+			{
+				BasicEffect boxEffect = new BasicEffect(this.GraphicsDevice);
+				boxEffect.World = Matrix.Identity;
+				boxEffect.View = this.Player.Camera.ViewMatrix;
+				boxEffect.Projection = this.Player.Camera.ProjectionMatrix;
+				boxEffect.TextureEnabled = false;
 
-			//foreach (VertexPositionColor[] primitiveList in this.boxes)
-			//{
-			//    // Draw the box with a LineList
-			//    foreach (EffectPass pass in boxEffect.CurrentTechnique.Passes)
-			//    {
-			//        pass.Apply();
-			//        GraphicsDevice.DrawUserIndexedPrimitives(PrimitiveType.LineList, primitiveList, 0, 8, bBoxIndices, 0, 12);
-			//    }
-			//}
+				foreach (VertexPositionColor[] primitiveList in this.boxes)
+				{
+					// Draw the box with a LineList
+					foreach (EffectPass pass in boxEffect.CurrentTechnique.Passes)
+					{
+						pass.Apply();
+						GraphicsDevice.DrawUserIndexedPrimitives(PrimitiveType.LineList, primitiveList, 0, 8, bBoxIndices, 0, 12);
+					}
+				}
+			}
 		}
 	}
 }

@@ -11,6 +11,7 @@ using UntitledSandbox.Terrain;
 using UntitledSandbox.Terrain.Renderers;
 using UntitledSandbox.Common.UI;
 using UntitledSandbox.Terrain.Quad;
+using UntitledSandbox.Terrain.Fractal;
 
 namespace UntitledSandbox
 {
@@ -26,6 +27,7 @@ namespace UntitledSandbox
 
 		public Renderer SkyRenderer { get; set; }
 		public Renderer TerrainRenderer { get; set; }
+		public Renderer AxisRenderer { get; set; }
 
 		public Game()
 		{
@@ -66,6 +68,8 @@ namespace UntitledSandbox
 			//this.TerrainRenderer = new NoiseTerrainRenderer(1);
 			//this.TerrainRenderer = new BlockTerrainRenderer();
 
+			this.AxisRenderer = new AxisRenderer();
+
 			Components.Add(new FrameRateCounter(this));
 
 			// [XNA]
@@ -76,6 +80,7 @@ namespace UntitledSandbox
 		{
 			this.SkyRenderer.Load();
 			this.TerrainRenderer.Load();
+			this.AxisRenderer.Load();
 		}
 
 		protected override void UnloadContent()
@@ -103,6 +108,7 @@ namespace UntitledSandbox
 
 			this.SkyRenderer.Draw();
 			this.TerrainRenderer.Draw();
+			this.AxisRenderer.Draw();
 
 			SpriteBatch.Begin();
 			UIManager.DrawWindows();
